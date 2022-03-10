@@ -28,7 +28,7 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 <ul>
 	<li>Node.js</li>
 	<li>HTML 5</li>
-	<li>CSS</li>
+	<li>CSS 3</li>
 	<li>Bootstrap</li>
 	<li>MySQL</li>
 	<li>API: https://www.frankfurter.app/</li>
