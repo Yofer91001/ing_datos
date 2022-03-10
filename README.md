@@ -37,6 +37,27 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 ## Esquema
 <img src = "./esquema.jpg">
 
+## Creación de tablas.
 
+~~~
+CREATE TABLE users(
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(30) NOT NULL,
+        user VARCHAR(10) NOT NULL UNIQUE,
+        pass VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE types(
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(15) NOT NULL
+);
+
+CREATE TABLE stocks(
+        code CHAR(3) PRIMARY KEY,
+        name VARCHAR(15) NOT NULL UNIQUE,
+        value FLOAT NOT NULL
+);
+
+~~~
 
 
