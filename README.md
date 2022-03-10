@@ -19,7 +19,7 @@ Este proyecto, es una aplicación web, que recopila datos de una API de divisas,
 	<li>CSS</li>
 	<li>Bootstrap</li>
 	<li>MySQL</li>
-	<li>API: <link href = "https://www.frankfurter.app/" placejolder = "API" ></li>
+	<li>API: https://www.frankfurter.app/</li>
 	<li>Realizar transacciones entre divisas</li>
 	<li>Consignar y retirar dinero de manera fácil</li> 
 </ul>
