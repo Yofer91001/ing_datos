@@ -1,5 +1,11 @@
 # Intercambio de Divisas
 
+## Integrantes
+<ul>
+<li>Gabirela Fonseca </li>
+<li>Valentina Hernández </li>
+<li>Yofer Quintanilla </li>
+</ul>
 ## Probelma
 
 Dentro del mercado no existen páginas que te den la información y a la vez te permitan realizar transacciones con diversas divisas, sin tener un alto conocimiento en el área. Además, las aplicaciones que permiten las transacciones entre divisas recaudan una cuota muy alta. 
@@ -26,6 +32,10 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 	<li>API: https://www.frankfurter.app/</li>
 	<li>LocalHost</li>
 </ul>
+
+
+## Esquema
+<img src = "./esquema.jpg">
 
 
 
