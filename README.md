@@ -46,7 +46,7 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 CREATE DATABASE exval;
 ~~~
 
-## Creación de tablas
+## Creación de relaciones
 
 ~~~
 DROP TABLE IF EXISTS users;
