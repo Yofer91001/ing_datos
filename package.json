@@ -1,0 +1,29 @@
+{
+  "name": "exval",
+  "version": "1.0.0",
+  "description": "an app for stock convertion and management",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yofer91001/ing_datos.git"
+  },
+  "author": "Yofer Quintanilla Gomez, Valentina Hernandez, Gabriela Fonseca",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yofer91001/ing_datos/issues"
+  },
+  "homepage": "https://github.com/Yofer91001/ing_datos#readme",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.3",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15",
+    "path": "^0.12.7",
+    "util": "^0.12.4"
+  }
+}
