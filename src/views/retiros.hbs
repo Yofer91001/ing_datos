@@ -1,0 +1,36 @@
+
+<div id = "contenedor_login">
+
+    <form class = "login_form">
+        <h2>
+            Realizar Retiro
+        </h2>
+        <hr style="color:rgb(3, 124, 124)">
+        <div class="mb-3">
+            <label for="moneda">Divisa: </label>
+            <select name="moneda" id="moneda">
+                <option value="COL">Peso colombiano</option>
+                <option value="US">Dolar</option>
+            </select>
+            
+        </div>
+
+        <div class="mb-3">
+            <label for="cantidad" class="form-label">Cantidad</label>
+            <input type="number" min="0" class="form-control" id="cantidad" aria-describedby="emailHelp">
+        </div>
+
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        
+
+        <div id = "contenedor_btn_login">
+            <button type="submit" class="btn btn-primary" style="background-color:rgb(3, 124, 124); border: none;">Hacer retiro</button>
+
+        </div>
+        
+    </form>
+
+</div>

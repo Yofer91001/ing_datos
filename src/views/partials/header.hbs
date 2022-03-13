@@ -1,0 +1,67 @@
+<style>
+    #header{
+        height: 8vh;
+        -webkit-box-shadow: -3px -4px 43px -7px rgba(0,0,0,0.59);
+-moz-box-shadow: -3px -4px 43px -7px rgba(0,0,0,0.59);
+box-shadow: -3px -4px 43px -7px rgba(0,0,0,0.59);
+        border: 1px solid rgb(175, 255, 255);
+        background-color: rgb(242, 252, 253);
+    }
+    .seccion{
+        color: rgb(3, 124, 124);
+    }
+    .seccion:hover{
+        color: white;
+        background-color: rgb(3, 124, 124);
+        transform: scale(1.1);
+        border-radius: 5%;
+    }
+
+    
+    .dos_secciones{
+        display: flex;
+        justify-content: space-around;
+    }
+    
+    .nav{
+        height: 100%;
+    }
+    
+
+
+</style>
+<div id="header">
+
+    
+    {{#if sesion}}
+        <ul class="nav nav-tabs ">
+        <li class="nav-item section_container">
+            <a class="nav-link active seccion" aria-current="page" href="/">Inicio</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link seccion" href="/retiros">Retirar</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link seccion" href="/conversiones">Conversiones</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link seccion" href="/consignaciones">Consignar</a>
+        </li>
+        
+        </ul>
+
+
+    {{else}}
+        
+        <ul class="nav nav-tabs dos_secciones">
+            <a class="nav-link seccion" href="/login">Iniciar Sesión</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link seccion" href="/logup">Crear cuenta</a>
+        </li>
+
+        </ul>
+    {{/if}}
+    
+</div>
+
