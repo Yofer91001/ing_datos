@@ -118,7 +118,7 @@ CREATE TABLE transactions(
 
 CREATE TABLE capitals(
         id INT PRIMARY KEY,
-        stk_code CHAR(3) REFEENCES stocks(code),
+        stk_code CHAR(3) REFERENCES stocks(code),
         id_user INT REFERENCES users(id),
         amount INT CHECK (amount >= 0) NOT NULL
 );
