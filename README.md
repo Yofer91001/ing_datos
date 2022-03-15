@@ -99,7 +99,7 @@ CREATE TABLE priorities(
 );
 
 
-CREATE TABLE insterests(
+CREATE TABLE interests(
         type INT REFERENCES types(id),
         stk_code CHAR(3) REFERENCES stocks(code),
         percentage DECIMAL(5,2) NOT NULL,
@@ -120,7 +120,7 @@ CREATE TABLE capitals(
         id INT PRIMARY KEY,
         stk_code CHAR(3) REFERENCES stocks(code),
         id_user INT REFERENCES users(id),
-        amount INT CHECK (amount >= 0) NOT NULL
+        amount INT NOT NULL CHECK (amount >= 0) 
 );
 
 
