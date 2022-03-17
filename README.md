@@ -147,8 +147,4 @@ CREATE TABLE capitals(
 <li>Ordenar el join del anterior punto por distintos atributos</li>
 </ul>
 
-<form>
-	<checkbox>
-		Hola
-	</checkbox>
-</form>
+
