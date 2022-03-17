@@ -146,3 +146,9 @@ CREATE TABLE capitals(
 <li>Un join para ver todas las transacciones con los nombres de usuario, divisas y tipo de transacción</li>
 <li>Ordenar el join del anterior punto por distintos atributos</li>
 </ul>
+
+<form>
+	<checkbox>
+		Hola
+	</checkbox>
+</form>
