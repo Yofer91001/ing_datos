@@ -30,7 +30,7 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 	<li>HTML 5</li>
 	<li>CSS 3</li>
 	<li>Bootstrap</li>
-	<li>MySQL</li>
+	<li>Postgresql (Docker)</li>
 	<li>API: https://www.frankfurter.app/</li>
 	<li>LocalHost</li>
 </ul>
