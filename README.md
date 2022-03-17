@@ -126,4 +126,20 @@ CREATE TABLE capitals(
 
 ~~~
 
+## En desarrollo:
+
+<ul>
+<li>Inserción de usuarios</li>
+<li>Inserción de transacciones (Trigger para insertar el interés)</li>
+<li>Inserción de capitales</li>
+<li>Modificación de capitales</li>
+<li>Inserción de divisas desde la API</li>
+<li>Inserción de tipos de transacciones</li>
+<li>Inserción de prioridades</li>
+<li>Modificación de prioridades</li>
+<li>Creación de tabla virtual de ganancias</li>
+<li>Actualización, por medio de for, de todos los intereses</li>
+<li>Inserción de intereses</li>
+</ul>
+
 
