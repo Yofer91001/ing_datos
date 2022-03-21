@@ -1,31 +1,31 @@
 
 <div id = "contenedor_login">
 
-    <form class = "login_form">
+    <form class = "login_form" action = "/logup" method="post">
         <h2>
             Registrarse
         </h2>
         <hr style="color:rgb(3, 124, 124)">
         <div class="mb-3">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="nombre" aria-describedby="emailHelp">
+            <input type="text" name = "name" class="form-control" id="nombre" aria-describedby="emailHelp">
             
         </div>
         <div class="mb-3">
             <label for="ususario" class="form-label">Usuario</label>
-            <input type="text" class="form-control" id="usuario" aria-describedby="emailHelp">
+            <input type="text" name = "user" class="form-control" id="usuario" aria-describedby="emailHelp">
             
         </div>
 
         <div class="mb-3">
-            <label for="email" class="form-label">Usuario</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="ejemplo@ejemplo.com">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name = "email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="ejemplo@ejemplo.com">
             
         </div>
 
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <input type="password" name = "pass" class="form-control" id="exampleInputPassword1">
         </div>
         <div id = "contenedor_btn_login">
             <button type="submit" class="btn btn-primary" style="background-color:rgb(3, 124, 124); border: none;">Crear cuenta</button>
