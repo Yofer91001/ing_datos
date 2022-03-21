@@ -113,7 +113,7 @@ CREATE TABLE transactions(
         stk_from CHAR(3) REFERENCES stocks(code),
         stk_to CHAR(3) REFERENCES stocks(code),
         amount INT NOT NULL,
-        date DATETIME NOT NULL,
+        date DATE NOT NULL,
         interest INT 
 );
 
