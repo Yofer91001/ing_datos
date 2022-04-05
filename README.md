@@ -60,13 +60,13 @@ CREATE DATABASE exval;
 
 ## Explicación de las relaciones
 <ul>
-	<li>Tabla <code>users</code> será la que almacena la información de los usuarios</li>
-	<li>Tabla <code>types</code> será la que almacena los tipos de transacciones</li>
-	<li>Tabla <code>stocks</code> será la que almacena la información de las divisas</li>
-	<li>Tabla <code>priorities</code> será la que almacena las peincipales divisas en las que se interesan los usuarios</li>
-	<li>Tabla <code>interests</code> será la que almacena los intereses de cada transacción</li>
-	<li>Tabla <code>transactions</code> será la que almacena la información de cada transacción</li>
-	<li>Tabla <code>capitals</code> será la que almacena la información del dinero que tiene cada ususario en las diversas divisas</li>
+	<li> <code>users</code> será la que almacena la información de los usuarios</li>
+	<li> <code>types</code> será la que almacena los tipos de transacciones</li>
+	<li> <code>stocks</code> será la que almacena la información de las divisas</li>
+	<li> <code>priorities</code> será la que almacena las peincipales divisas en las que se interesan los usuarios</li>
+	<li> <code>interests</code> será la que almacena los intereses de cada transacción</li>
+	<li> <code>transactions</code> será la que almacena la información de cada transacción</li>
+	<li> <code>capitals</code> será la que almacena la información del dinero que tiene cada ususario en las diversas divisas</li>
 	
 </ul>
 
