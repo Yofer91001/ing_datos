@@ -36,15 +36,21 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 </ul>
 
 
-## Esquema
+## Diseño Esquema
 
-### Relacional
+### Bosquejo
 
 <img src = "./esquema.jpg">
 
-### Digital
+### Digital (Conceptual)
 
 <img src = "./esquema_digital.png">
+
+### Digital (Lógico)
+
+<img src = "./esquema_digital.png">
+
+
 
 ## Creación base de datos
 
