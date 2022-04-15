@@ -30,7 +30,7 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 	<li>HTML 5</li>
 	<li>CSS 3</li>
 	<li>Bootstrap</li>
-	<li>MySQL</li>
+	<li>Postgresql (Docker)</li>
 	<li>API: https://www.frankfurter.app/</li>
 	<li>LocalHost</li>
 </ul>
@@ -79,8 +79,9 @@ DROP TABLE IF EXISTS capitals;
 CREATE TABLE users(
         id SERIAL PRIMARY KEY,
         name VARCHAR(30) NOT NULL,
-        user VARCHAR(10) NOT NULL UNIQUE,
-        pass VARCHAR(30) NOT NULL
+        pass VARCHAR(30) NOT NULL,
+        email VARCHAR(50) NOT  NULL,
+        user_name VARCHAR(10) NOT NULL UNIQUE
 );
 
 CREATE TABLE types(
@@ -99,7 +100,7 @@ CREATE TABLE priorities(
 );
 
 
-CREATE TABLE insterests(
+CREATE TABLE interests(
         type INT REFERENCES types(id),
         stk_code CHAR(3) REFERENCES stocks(code),
         percentage DECIMAL(5,2) NOT NULL,
@@ -112,7 +113,7 @@ CREATE TABLE transactions(
         stk_from CHAR(3) REFERENCES stocks(code),
         stk_to CHAR(3) REFERENCES stocks(code),
         amount INT NOT NULL,
-        date DATETIME NOT NULL,
+        date DATE NOT NULL,
         interest INT 
 );
 
@@ -120,10 +121,31 @@ CREATE TABLE capitals(
         id INT PRIMARY KEY,
         stk_code CHAR(3) REFERENCES stocks(code),
         id_user INT REFERENCES users(id),
-        amount INT CHECK (amount >= 0) NOT NULL
+        amount INT  NOT NULL CHECK (amount >= 0)
 );
 
 
 ~~~
+
+## En desarrollo:
+
+<ul>
+<li>Creación tipos de datos personalizados</li>
+<li>Inserción de usuarios</li>
+<li>Inserción de transacciones (Trigger para insertar el interés)</li>
+<li>Inserción de capitales</li>
+<li>Modificación de capitales por try/catch en las transacciones de la tabla transactions</li>
+<li>Inserción de divisas desde la API</li>
+<li>Inserción de tipos de transacciones</li>
+<li>Inserción de prioridades</li>
+<li>Modificación de prioridades</li>
+<li>Creación de tabla virtual de ganancias</li>
+<li>Función para calcular el interés por transacción</li>
+<li>Actualización, por medio de for, de todos los intereses</li>
+<li>Inserción de intereses</li>
+<li>Creación de roles: Superusuario y solo lectura</li>
+<li>Un join para ver todas las transacciones con los nombres de usuario, divisas y tipo de transacción</li>
+<li>Ordenar el join del anterior punto por distintos atributos</li>
+</ul>
 
 
