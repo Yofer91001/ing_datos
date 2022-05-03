@@ -60,10 +60,6 @@ CREATE TABLE capitals(
         amount amount_dom
 );
 
---CREACION DE TABLA GANANCIAS
-SELECT SUM(amount*intest) AS ganancias
-FROM transactions
-
 --CREACION DE INDICE TABLA TRANSACCIONES
 CREATE INDEX id_transaccion ON transactions(id);
 
