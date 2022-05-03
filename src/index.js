@@ -17,6 +17,7 @@ app.use(express.static("public"));
 app.use(require("./routes/logs.js"));
 app.use(require("./routes/app.js"));
 
+
 app.set("views", path.join(__dirname + "/views"))
 app.engine(".hbs", exphbs.engine({
     defaultLayout: "main",

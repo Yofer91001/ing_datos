@@ -7,53 +7,71 @@ router.get("/", (req, res)=>{
 
     const {user} = req.query;
 
-    if(user.length > 0){
+    if(user != undefined){
+       
         res.render("inicio.hbs", {user: user});
+        
+    }else{
+        res.render("inicio.hbs");
+
     }
-    
-    res.render("inicio.hbs");
 });
 
 router.get("/inicio", (req, res)=>{
 
     const params = req.query;
     
-    if(user.length > 0){
-        res.render("inicio.hbs");
+    if(params.user != undefined){
+        res.render("inicio.hbs", {user: params.user});
         
     }else{
         
-        res.render("inicio.hbs", {user: params.user});
+        res.render("inicio.hbs");
     }
 });
 
 router.get("/consignaciones", (req, res)=>{
     const {user} = req.query;
 
-    if(user.length > 0){
+    if(user != undefined){
         res.render("consignaciones.hbs", {user: user});
+    }else{
+
+        res.redirect("/inicio");
+
     }
-    res.render("consignaciones.hbs")
 
 });
 
 router.get("/retiros", (req, res)=>{
     const {user} = req.query;
 
-    if(user.length > 0){
+    if(user != undefined){
         res.render("retiros.hbs", {user: user});
+    }else{
+
+        res.redirect("/inicio");
+
     }
-    res.render("retiros.hbs")
 
 });
 
 router.get("/conversiones", (req, res)=>{
     const {user} = req.query;
 
-    if(user.length > 0){
+    if(user != undefined){
         res.render("conversiones.hbs", {user: user});
+    }else{
+
+        res.redirect("/inicio");
     }
-    res.render("conversiones.hbs")
+
+});
+
+
+router.get("/admin-panel", (req, res)=>{
+
+    res.render("admin.hbs")
 
 });
 

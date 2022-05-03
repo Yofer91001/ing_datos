@@ -45,27 +45,23 @@ router.post("/login", async (req, res)=>{
 
         
         
-        if(query.rows.length > 0 || query2.rows.length > 0 ){
-            if(query.rows[0].pass == password ){
-                
+        if(query.rows[0] != undefined ){
+            if(query.rows[0].pass == password)
                 res.redirect("/inicio/?user=" + query.rows[0].user_name);
                 
-            }else if(query2.rows[0].pass == password){
-                console.log("ENTRÓ")
+            
+            
+        }else if(query2.rows[0] != undefined){
+            console.log(query2.rows[0].pass);
+            if(query2.rows[0].pass == password)
                 res.redirect("/inicio/?user=" + email);
-
-
-            }
-            
-            
-            
+           
         }
         
-        await +pool.end();
-        res.render("logs/login.hbs")
-    }else{
-        res.redirect("/login")
+        await pool.end();
+        
     }
+    res.render("logs/login.hbs")
 
     
     
@@ -91,7 +87,10 @@ router.post("/logup", async (req, res)=>{
         const query = await pool.query("SELECT email FROM users WHERE email = $1", [email]);
         const query2 = await pool.query("SELECT user FROM users WHERE user_name = $1", [user]);
 
-        if(query.length > 0 || query2.lenght > 0){
+
+        
+        
+        if(query.rows[0] != undefined || query2.rows[0] != undefined){
             res.redirect("/login")
         }else{
             await pool.query("INSERT INTO users(user_name  , name, email, pass) VALUES  ($1,$2,$3,$4)", [user, name, email, pass]);
