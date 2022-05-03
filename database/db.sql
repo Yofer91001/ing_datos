@@ -129,21 +129,26 @@ CREATE OR REPLACE PROCEDURE actualizarCapital(id_usuario INT, id_tipo INT, moned
         $$;
 
 
-CREATE OR REPLACE PROCEDURE actualizar_interes_transaccion(transaccion_id INT)
+CREATE OR REPLACE PROCEDURE actualizarInteresTransaccion(transaccion_id INT)
         LANGUAGE 'plpgsql'
 	DECLARE
 	@interes amount
         AS
         $$ 
-	SET @interest = calcular_interes(transaccion_id)
+	SET @interest = calcularInteres(transaccion_id)
         UPDATE transactions SET interest = @interest WHERE transactions.id = transaccion_id)
         $$;
 
-
+CREATE OR REPLACE PROCEDURE borrarPrioridad(moneda amount, id_usuario INT)
+ LANGUAGE 'plpgsql'
+        AS
+        $$
+        DELETE FROM priorities WHERE stk_code = moneda AND id_user = id_usuario
+        $$;
 
 --#FUNCIONES
 --##CALCULAR INTERES POR TRANSACCION
-CREATE OR REPLACE FUNCTION calcular_interes(transaccion_id INT)
+CREATE OR REPLACE FUNCTION calcularInteres(transaccion_id INT)
 RETURNS INT
 DECLARE
 @porcentaje INT
