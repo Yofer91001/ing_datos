@@ -8,6 +8,9 @@ DROP TABLE IF EXISTS interests;
 DROP TABLE IF EXISTS transactions;
 DROP TABLE IF EXISTS capitals;
 
+--CREACION DE DOMINIO PARA AMOUNT
+CREATE DOMAIN amount_dom as
+	float NOT NULL CHECK (value >= 0);
 
 CREATE TABLE users(
         id SERIAL PRIMARY KEY,
@@ -45,7 +48,7 @@ CREATE TABLE transactions(
         id_type INT REFERENCES types(id),
         stk_from CHAR(3) REFERENCES stocks(code),
         stk_to CHAR(3) REFERENCES stocks(code),
-        amount FLOAT NOT NULL,
+        amount amount_dom,
         date DATETIME NOT NULL,
         interest INT 
 );
@@ -54,24 +57,75 @@ CREATE TABLE capitals(
         id INT PRIMARY KEY,
         stk_code CHAR(3) REFERENCES stocks(code),
         id_user INT REFERENCES users(id),
-        amount INT  NOT NULL CHECK (amount >= 0)
+        amount amount_dom
 );
 
+--CREACION DE TABLA GANANCIAS
+SELECT SUM(amount*intest) AS ganancias
+FROM transactions
 
 --CREACION DE INDICE TABLA TRANSACCIONES
 CREATE INDEX id_transaccion ON transactions(id);
 
 --#PROCEDURES
 --##INSERCIONES
-CREATE OR REPLACE PROCEDURE insertar_transaccion(id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad INT)
-	LANGUAGE 'plpgsql'
-	AS
-	$$
-	INSERT INTO transactions(user_id, type_id, stk_from, stk_to, amount) VALUES(id_usuario, id_tipo, moneda_i, moneda_f, cantidad);
-	$$;
+CREATE OR REPLACE PROCEDURE insertUsers(name VARCHAR(30), pass VARCHAR(30), email VARCHAR(50), user_name VARCHAR(10))
+  LANGUAGE 'plpgsql'
+  as $$
+  BEGIN
+  	INSERT INTO users(name, pass, email, user_name) VALUES (name, pass, email, user_name);
+  end;
+  $$
+  
+CREATE OR REPLACE PROCEDURE insertTypes(name VARCHAR(15))
+  LANGUAGE 'plpgsql'
+  as $$
+  BEGIN
+  	INSERT INTO types(name) VALUES(name);
+  end;
+  $$
+  
+CREATE OR REPLACE PROCEDURE insertStocks(code CHAR(3), name VARCHAR(15), value FLOAT)
+  LANGUAGE 'plpgsql'
+  as $$
+  BEGIN
+  	INSERT INTO stocks(code, name, value) VALUES(code, name, value);
+  end;
+  $$ 
+  
+CREATE OR REPLACE PROCEDURE insertPriorities(stk_code CHAR(3), id_user int)
+  LANGUAGE 'plpgsql'
+  as $$
+  BEGIN
+  	INSERT INTO priorities(stk_code, id_user) VALUES(stk_code, id_user);
+  end;
+  $$
+  
+CREATE OR REPLACE PROCEDURE insertInterests(types int, stk_code char(3), percentage DECIMAL)
+  LANGUAGE 'plpgsql'
+  as $$
+  BEGIN
+  	INSERT INTO interests(types, stk_code, percentage) VALUES(types, stk_code, percentage);
+  end;
+  $$
+  
+CREATE OR REPLACE PROCEDURE insertTransactions(id int, id_user int, id_type int, stk_from char(3), stk_to char(3), amount int, date date, interests int)
+  LANGUAGE 'plpgsql'
+  as $$
+  BEGIN
+  	INSERT INTO transactions(id, id_user, id_type, stk_from, stk_to, amount, date, interests) VALUES(id, id_user, id_type, stk_from, stk_to, amount, date, interests);
+  end;
+  $$
+  
+CREATE OR REPLACE PROCEDURE insertCapitals(id int, stk_code char(3), id_user int, amount int)
+  LANGUAGE 'plpgsql'
+  as $$
+  BEGIN
+  	INSERT INTO capitals(id, stk_code, id_user, amount) VALUES(id, stk_code, id_user, amount);
+  end;
+  $$
 
-
-
+--#ACTUALIZACIONES
 CREATE OR REPLACE PROCEDURE actualizar_capital(id_usuario INT, id_tipo INT, moneda CHAR(3), cantidad FLOAT)
         LANGUAGE 'plpgsql'
         AS
