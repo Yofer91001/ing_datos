@@ -136,9 +136,7 @@ CREATE TABLE capitals(
 ## En desarrollo:
 
 <ul>
-<li>Inserción de transacciones (Trigger para insertar el interés)</li>
 <li>Modificación de capitales por try/catch en las transacciones de la tabla transactions</li>
-<li>Modificación de prioridades</li>
 <li>Creación de roles: Superusuario y solo lectura</li>
 <li>Ordenar un join y windowfuntion para organizar las transacciones por atributos</li>
 <li>Estadisticas para el administrador</li>
