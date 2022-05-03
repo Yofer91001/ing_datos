@@ -136,22 +136,12 @@ CREATE TABLE capitals(
 ## En desarrollo:
 
 <ul>
-<li>Creación tipos de datos personalizados</li>
-<li>Inserción de usuarios</li>
 <li>Inserción de transacciones (Trigger para insertar el interés)</li>
-<li>Inserción de capitales</li>
 <li>Modificación de capitales por try/catch en las transacciones de la tabla transactions</li>
-<li>Inserción de divisas desde la API</li>
-<li>Inserción de tipos de transacciones</li>
-<li>Inserción de prioridades</li>
 <li>Modificación de prioridades</li>
-<li>Creación de tabla virtual de ganancias</li>
-<li>Función para calcular el interés por transacción</li>
-<li>Actualización, por medio de for, de todos los intereses</li>
-<li>Inserción de intereses</li>
 <li>Creación de roles: Superusuario y solo lectura</li>
-<li>Un join para ver todas las transacciones con los nombres de usuario, divisas y tipo de transacción</li>
-<li>Ordenar el join del anterior punto por distintos atributos</li>
+<li>Ordenar un join y windowfuntion para organizar las transacciones por atributos</li>
+<li>Estadisticas para el administrador</li>
 </ul>
 
 
