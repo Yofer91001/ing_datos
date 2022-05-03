@@ -106,7 +106,9 @@ CREATE OR REPLACE PROCEDURE insertTransactions(identificador INT, id_usuario INT
   LANGUAGE 'plpgsql'
   as $$
   BEGIN
-  	INSERT INTO transactions(id, id_user, id_type, stk_from, stk_to, amount) VALUES(identificador, id_usuario, id_tipo, moneda_i, moneda_f, cantidad);
+  	TRY BEGING TRANSACTION
+	IF
+  		INSERT INTO transactions(id, id_user, id_type, stk_from, stk_to, amount) VALUES(identificador, id_usuario, id_tipo, moneda_i, moneda_f, cantidad);
   end;
   $$
   
@@ -119,31 +121,35 @@ CREATE OR REPLACE PROCEDURE insertCapitals(identificador INT, moneda CHAR(3), id
   $$
 
 --#ACTUALIZACIONES
-CREATE OR REPLACE PROCEDURE actualizar_capital(id_usuario INT, id_tipo INT, moneda CHAR(3), cantidad FLOAT)
+CREATE OR REPLACE PROCEDURE actualizarCapital(id_usuario INT, id_tipo INT, moneda CHAR(3), cantidad amount, interest amount)
         LANGUAGE 'plpgsql'
         AS
         $$
-        UPDATE capitalas SET amount = amount - cantidad WHERE user_id = id_usuario AND type_id = id_tipo AND stk_code = moneda
+        UPDATE capitalas SET amount = amount - cantidad - interest WHERE id_user = id_usuario AND id_type = id_tipo AND stk_code = moneda
         $$;
 
 
-CREATE OR REPLACE PROCEDURE actualizar_interes_transaccion(transaccion_id INT, cantidad FLOAT)
+CREATE OR REPLACE PROCEDURE actualizar_interes_transaccion(transaccion_id INT)
         LANGUAGE 'plpgsql'
+	DECLARE
+	@interes amount
         AS
-        $$
-        UPDATE capitalas SET amoount = amount - cantidad WHERE user_id = id_usuario AND type_id = id_tipo AND stk_code )
+        $$ 
+	SET @interest = calcular_interes(transaccion_id)
+        UPDATE transactions SET interest = @interest WHERE transactions.id = transaccion_id)
         $$;
 
 
 
 --#FUNCIONES
 --##CALCULAR INTERES POR TRANSACCION
-CREATE OR REPLACE FUNCTION calcular_interes(id_tipo INT, moneda CHAR(3), cantidad FLOAT)
+CREATE OR REPLACE FUNCTION calcular_interes(transaccion_id INT)
 RETURNS INT
 DECLARE
 @porcentaje INT
 BEGIN
-	SET @porcentaje = SELECT percentage FROM interests WHERE type_id = id_tipo AND stk_code = moneda
+WITH transaccion AS (SELECT * FROM transactions WHERE id = transaccion_id)
+	SET @porcentaje = SELECT i.percentage FROM interest i INNER JOIN transaccion t ON t.stk_from = i.stk_code AND t.id_type = i.type
 	RETURN @porcentaje * cantidad
 END;
 
