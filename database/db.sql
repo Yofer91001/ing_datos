@@ -132,12 +132,11 @@ CREATE OR REPLACE PROCEDURE actualizarCapital(id_usuario INT, id_tipo INT, moned
 
 CREATE OR REPLACE PROCEDURE actualizarInteresTransaccion(transaccion_id INT)
         LANGUAGE 'plpgsql'
-	DECLARE
-	@interes amount
+	DECLARE interes amount
         AS
         $$
 	BEGIN
-	SET @interest = calcularInteres(transaccion_id);
+	SET interest = calcularInteres(transaccion_id);
         UPDATE transactions SET interest = @interest WHERE transactions.id = transaccion_id);
 	END;
         $$;
