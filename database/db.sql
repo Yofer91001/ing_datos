@@ -124,7 +124,7 @@ CREATE OR REPLACE PROCEDURE actualizarCapital(id_usuario INT, id_tipo INT, moned
         LANGUAGE 'plpgsql'
         AS
         $$
-        UPDATE capitalas SET amount = amount - cantidad - interest WHERE id_user = id_usuario AND id_type = id_tipo AND stk_code = moneda
+        UPDATE capitals SET amount = amount - cantidad - interest WHERE id_user = id_usuario AND id_type = id_tipo AND stk_code = moneda
         $$;
 
 
