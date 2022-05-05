@@ -72,52 +72,51 @@ INSERT INTO types(name) VALUES('Cambio');
 --##INSERCIONES
 CREATE OR REPLACE PROCEDURE insertUser(name VARCHAR(30), pass VARCHAR(30), email VARCHAR(50), user_name VARCHAR(10))
   LANGUAGE 'plpgsql'
-  as $$
+  AS $$
   BEGIN
   	INSERT INTO users(name, pass, email, user_name) VALUES (name, pass, email, user_name);
-  end;
+  END;
   $$
   
 CREATE OR REPLACE PROCEDURE insertStock(codigo CHAR(3), nombre VARCHAR(15), valor FLOAT)
   LANGUAGE 'plpgsql'
-  as $$
+  AS $$
   BEGIN
   	INSERT INTO stocks(code, name, value) VALUES(codigo, nombre, valor);
-  end;
+  END;
   $$ 
   
 CREATE OR REPLACE PROCEDURE insertPriority(moneda CHAR(3), id_usuario INT)
   LANGUAGE 'plpgsql'
-  as $$
+  AS $$
   BEGIN
   	INSERT INTO priorities(stk_code, id_user) VALUES(moneda, id_usuario);
-  end;
+  END;
   $$
   
 CREATE OR REPLACE PROCEDURE insertInterest(tipo INT, moneda CHAR(3), porcentaje DECIMAL)
   LANGUAGE 'plpgsql'
-  as $$
+  AS $$
   BEGIN
   	INSERT INTO interests(type, stk_code, percentage) VALUES(tipo, moneda, porcentaje);
-  end;
+  END;
   $$
   
 CREATE OR REPLACE PROCEDURE insertTransaction(identificador INT, id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad amount)
   LANGUAGE 'plpgsql'
-  as $$
+  AS $$
   BEGIN
-  	TRY BEGING TRANSACTION
-	IF
-  		INSERT INTO transactions(id, id_user, id_type, stk_from, stk_to, amount) VALUES(identificador, id_usuario, id_tipo, moneda_i, moneda_f, cantidad);
-  end;
+  	
+  	INSERT INTO transactions(id, id_user, id_type, stk_from, stk_to, amount) VALUES(identificador, id_usuario, id_tipo, moneda_i, moneda_f, cantidad);
+  END;
   $$
   
 CREATE OR REPLACE PROCEDURE insertCapital(identificador INT, moneda CHAR(3), id_usuario INT, cantidad amount)
   LANGUAGE 'plpgsql'
-  as $$
+  AS $$
   BEGIN
   	INSERT INTO capitals(id, stk_code, id_user, amount) VALUES(identificador, moneda, id_usuario, cantidad);
-  end;
+  END;
   $$
 
 --#ACTUALIZACIONES
