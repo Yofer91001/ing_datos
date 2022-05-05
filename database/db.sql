@@ -135,7 +135,7 @@ CREATE OR REPLACE PROCEDURE actualizarInteresTransaccion(transaccion_id INT)
         AS
         $$
 	BEGIN
-	WITH interest = AS calcularInteres(transaccion_id);
+	WITH interest AS calcularInteres(transaccion_id);
         UPDATE transactions SET interest = @interest WHERE transactions.id = transaccion_id);
 	END;
         $$;
