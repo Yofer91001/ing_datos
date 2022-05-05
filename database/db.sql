@@ -135,8 +135,8 @@ CREATE OR REPLACE PROCEDURE actualizarInteresTransaccion(transaccion_id INT)
         AS
         $$
 	BEGIN
-	WITH interest AS calcularInteres(transaccion_id);
-        UPDATE transactions SET interest = @interest WHERE transactions.id = transaccion_id);
+	WITH myconstants(myinterest) AS (VALUES(calcularInteres(transaccion_id));
+        UPDATE transactions SET interest = myinterest WHERE transactions.id = transaccion_id;
 	END;
         $$;
 
@@ -153,13 +153,13 @@ CREATE OR REPLACE PROCEDURE borrarPrioridad(moneda amount, id_usuario INT)
 --##CALCULAR INTERES POR TRANSACCION
 CREATE OR REPLACE FUNCTION calcularInteres(transaccion_id INT)
 RETURNS INT
-DECLARE
-@porcentaje INT
+$$
 BEGIN
-WITH transaccion AS (SELECT * FROM transactions WHERE id = transaccion_id)
-	SET @porcentaje = SELECT i.percentage FROM interest i INNER JOIN transaccion t ON t.stk_from = i.stk_code AND t.id_type = i.type
-	RETURN @porcentaje * cantidad
+	WITH transaccion AS (SELECT * FROM transactions WHERE id = transaccion_id);
+	WITH myconstants(porcentaje) AS (VALUES(SELECT i.percentage FROM interest i INNER JOIN transaccion t ON t.stk_from = i.stk_code AND t.id_type = i.type);
+	RETURN porcentaje * cantidad;
 END;
+$$
 
 
 --#TRIGGERS
