@@ -125,7 +125,7 @@ CREATE OR REPLACE PROCEDURE actualizarCapital(id_usuario INT, id_tipo INT, moned
         AS
         $$
 	BEGIN
-        UPDATE capitals SET amount = amount - cantidad - interest WHERE id_user = id_usuario AND id_type = id_tipo AND stk_code = moneda
+        UPDATE capitals SET amount = amount - cantidad - interest WHERE id_user = id_usuario AND id_type = id_tipo AND stk_code = moneda;
 	END;
         $$;
 
@@ -137,8 +137,8 @@ CREATE OR REPLACE PROCEDURE actualizarInteresTransaccion(transaccion_id INT)
         AS
         $$
 	BEGIN
-	SET @interest = calcularInteres(transaccion_id)
-        UPDATE transactions SET interest = @interest WHERE transactions.id = transaccion_id)
+	SET @interest = calcularInteres(transaccion_id);
+        UPDATE transactions SET interest = @interest WHERE transactions.id = transaccion_id);
 	END;
         $$;
 
@@ -147,7 +147,7 @@ CREATE OR REPLACE PROCEDURE borrarPrioridad(moneda amount, id_usuario INT)
         AS
         $$
 	BEGIN
-        DELETE FROM priorities WHERE stk_code = moneda AND id_user = id_usuario
+        DELETE FROM priorities WHERE stk_code = moneda AND id_user = id_usuario;
 	END;
         $$;
 
