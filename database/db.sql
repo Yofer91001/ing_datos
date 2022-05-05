@@ -70,7 +70,7 @@ INSERT INTO types(name) VALUES('Cambio');
 
 --#PROCEDURES
 --##INSERCIONES
-CREATE OR REPLACE PROCEDURE insertUsers(name VARCHAR(30), pass VARCHAR(30), email VARCHAR(50), user_name VARCHAR(10))
+CREATE OR REPLACE PROCEDURE insertUser(name VARCHAR(30), pass VARCHAR(30), email VARCHAR(50), user_name VARCHAR(10))
   LANGUAGE 'plpgsql'
   as $$
   BEGIN
@@ -78,7 +78,7 @@ CREATE OR REPLACE PROCEDURE insertUsers(name VARCHAR(30), pass VARCHAR(30), emai
   end;
   $$
   
-CREATE OR REPLACE PROCEDURE insertStocks(codigo CHAR(3), nombre VARCHAR(15), valor FLOAT)
+CREATE OR REPLACE PROCEDURE insertStock(codigo CHAR(3), nombre VARCHAR(15), valor FLOAT)
   LANGUAGE 'plpgsql'
   as $$
   BEGIN
@@ -86,7 +86,7 @@ CREATE OR REPLACE PROCEDURE insertStocks(codigo CHAR(3), nombre VARCHAR(15), val
   end;
   $$ 
   
-CREATE OR REPLACE PROCEDURE insertPriorities(moneda CHAR(3), id_usuario INT)
+CREATE OR REPLACE PROCEDURE insertPriority(moneda CHAR(3), id_usuario INT)
   LANGUAGE 'plpgsql'
   as $$
   BEGIN
@@ -94,7 +94,7 @@ CREATE OR REPLACE PROCEDURE insertPriorities(moneda CHAR(3), id_usuario INT)
   end;
   $$
   
-CREATE OR REPLACE PROCEDURE insertInterests(tipo INT, moneda CHAR(3), porcentaje DECIMAL)
+CREATE OR REPLACE PROCEDURE insertInterest(tipo INT, moneda CHAR(3), porcentaje DECIMAL)
   LANGUAGE 'plpgsql'
   as $$
   BEGIN
@@ -102,7 +102,7 @@ CREATE OR REPLACE PROCEDURE insertInterests(tipo INT, moneda CHAR(3), porcentaje
   end;
   $$
   
-CREATE OR REPLACE PROCEDURE insertTransactions(identificador INT, id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad amount)
+CREATE OR REPLACE PROCEDURE insertTransaction(identificador INT, id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad amount)
   LANGUAGE 'plpgsql'
   as $$
   BEGIN
@@ -112,7 +112,7 @@ CREATE OR REPLACE PROCEDURE insertTransactions(identificador INT, id_usuario INT
   end;
   $$
   
-CREATE OR REPLACE PROCEDURE insertCapitals(identificador INT, moneda CHAR(3), id_usuario INT, cantidad amount)
+CREATE OR REPLACE PROCEDURE insertCapital(identificador INT, moneda CHAR(3), id_usuario INT, cantidad amount)
   LANGUAGE 'plpgsql'
   as $$
   BEGIN
