@@ -134,14 +134,15 @@ CREATE OR REPLACE PROCEDURE actualizarInteresTransaccion(transaccion_id INT)
         LANGUAGE 'plpgsql'
         AS
         $$
+        DECLARE myinsterest INT;
 	BEGIN
-	WITH myconstants(myinterest) AS (VALUES(calcularInteres(transaccion_id));
+	SELECT * INTO myinsterest FROM calcularInteres(transaccion_id);
         UPDATE transactions SET interest = myinterest WHERE transactions.id = transaccion_id;
 	END;
         $$;
 
 CREATE OR REPLACE PROCEDURE borrarPrioridad(moneda amount, id_usuario INT)
- LANGUAGE 'plpgsql'
+        LANGUAGE 'plpgsql'
         AS
         $$
 	BEGIN
@@ -152,21 +153,32 @@ CREATE OR REPLACE PROCEDURE borrarPrioridad(moneda amount, id_usuario INT)
 --#FUNCIONES
 --##CALCULAR INTERES POR TRANSACCION
 CREATE OR REPLACE FUNCTION calcularInteres(transaccion_id INT)
-RETURNS INT
-$$
-BEGIN
-	WITH transaccion AS (SELECT * FROM transactions WHERE id = transaccion_id);
-	WITH myconstants(porcentaje) AS (VALUES(SELECT i.percentage FROM interest i INNER JOIN transaccion t ON t.stk_from = i.stk_code AND t.id_type = i.type);
-	RETURN porcentaje * cantidad;
-END;
-$$
+                RETURNS INT
+        $$
+                DECLARE porcentaje INT, cantidad INT
+        BEGIN
+                WITH transaccion AS (SELECT * FROM transactions WHERE id = transaccion_id);
+                SELECT i.percentage INTO porcentaje FROM interest i INNER JOIN transaccion t ON t.stk_from = i.stk_code AND t.id_type = i.type;
+                SELECT t.amount INTO cantidad FROM interest i INNER JOIN transaccion t ON t.stk_from = i.stk_code AND t.id_type = i.type)
+                RETURN porcentaje * cantidad;
+        END;
+        $$
 
 
 --#TRIGGERS
 CREATE OR REPLACE TRIGGER insertar_interes AFTER INSERT 
 ON transactions
-REFEREENCING NEW ROW AS nr
+REFERENCING NEW ROW AS nr
 FOR EACH ROW
+IF EXISTS (SELECT * FROM capitals WHERE id_user = nr.id_user AND stk_code = nr.stk_from AND amount > calcularInteres(nr.id))
+BEGIN
+        actualizarInteresTransaccion(nr.id);
+        IF 
+ELSE
+
+
+END;
+
 
 --VISTAS
 CREATE OR REPLACE VIEW ganancias AS
