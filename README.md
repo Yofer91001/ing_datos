@@ -2,7 +2,6 @@
 
 ## Integrantes
 <ul>
-<li>Gabirela Fonseca </li>
 <li>Valentina Hernández </li>
 <li>Yofer Quintanilla </li>
 </ul>
