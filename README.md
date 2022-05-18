@@ -8,11 +8,11 @@
 
 ## Probelma
 
-Dentro del mercado no existen páginas que te den la información y a la vez te permitan realizar transacciones con diversas divisas, sin tener un alto conocimiento en el área. Además, las aplicaciones que permiten las transacciones entre divisas recaudan una cuota muy alta. 
+Dentro del mercado existen pocas páginas que brinden información y a la vez permitan realizar transacciones con diferentes divisas, sin tener un alto conocimiento en el área. Y las pocas aplicaciones o páginas que lo permiten recaudan una cuota muy alta por su servicio.
 
 ## Descripción
 
-Este proyecto, es una aplicación web que recopila datos de una API de divisas, que facilita que lo usuarios europeos realicen transacciones entre estas, cobrando una pequeña comisión por transacción para manetener el servicio en línea. 
+Este proyecto, es una aplicación web que recopila datos de una API de divisas, para así permitirle a los usuarios europeos realizar transacciones entre estas de forma eficiente y segura, cobrando una pequeña comisión por transacción para mantener el servicio en línea.
 
 ## Utilidades:
  <ol>
