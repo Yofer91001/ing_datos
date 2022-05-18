@@ -35,7 +35,7 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 </ul>
 
 
-## Diseño Esquema
+## Diseño
 
 ### Bosquejo
 
