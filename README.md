@@ -41,17 +41,17 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 
 <img src = "./esquema.jpg">
 
-### Digital (Conceptual)
+### Diseño Conceptual
 
 <img src = "./image(2).png">
 
-### Digital (Lógico)
+### Diseño Lógico
 
 <img src = "./esquema_digital.png">
 
 
 
-## Creación base de datos
+## DDL: Creación base de datos
 
 ~~~
 CREATE DATABASE exval;
