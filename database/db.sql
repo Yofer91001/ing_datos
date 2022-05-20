@@ -64,7 +64,7 @@ CREATE TABLE divisas.priorities(
 
 
 CREATE TABLE divisas.interests(
-        id SMALLIN PRIMARY KEY,
+        id SMALLINT PRIMARY KEY,
         type INT REFERENCES divisas.types(id),
         stk_code CHAR(3) REFERENCES divisas.stocks(code),
         percentage DECIMAL(5,2) NOT NULL
