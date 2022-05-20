@@ -47,7 +47,7 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 
 ### Diseño Lógico
 
-<img src = "./esquema_digital.png">
+<img src = "./diagrama_relacional.png">
 
 
 
