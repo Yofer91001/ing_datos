@@ -1,18 +1,45 @@
 CREATE DATABASE exval;
 
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS types;
-DROP TABLE IF EXISTS stocks;
-DROP TABLE IF EXISTS priorities;
-DROP TABLE IF EXISTS interests;
-DROP TABLE IF EXISTS transactions;
-DROP TABLE IF EXISTS capitals;
+--\c exval
+
+
+CREATE SCHEMA divisas;
+
+--CREACIÓN DE LOS ROLES Y USUARIOS DE LA BASE DE DATOS
+CREATE ROLE developer WITH PASSWORD 'developerteam';
+CREATE USER yofer;
+CREATE USER valentina;
+GRANT ALL ON ALL TABLES IN SCHEMA divisas TO developer;
+REVOKE DELETE ON ALL TABLES IN SCHEMA divisas FROM developer;
+GRANT developer TO yofer;
+GRANT developer TO valentina;
 
 --CREACION DE DOMINIO PARA AMOUNT
-CREATE DOMAIN amount as
+CREATE DOMAIN amount AS
 	FLOAT NOT NULL CHECK (value >= 0);
 
-CREATE TABLE users(
+CREATE ROLE administrator WITH PASSWORD 'admin123';
+CREATE USER nelson;
+GRANT ALL ON ALL TABLES IN SCHEMA divisas TO administrator WITH GRANT OPTION;
+GRANT administrator TO nelson;
+
+
+CREATE ROLE data_analytics WITH PASSWORD 'analytics';
+CREATE USER analitico;
+GRANT SELECT ON ALL TABLES IN SCHEMA divisas TO data_analytics;
+
+
+ 
+DROP TABLE IF EXISTS divisas.users;
+DROP TABLE IF EXISTS divisas.types;
+DROP TABLE IF EXISTS divisas.stocks;
+DROP TABLE IF EXISTS divisas.priorities;
+DROP TABLE IF EXISTS divisas.interests;
+DROP TABLE IF EXISTS divisas.transactions;
+DROP TABLE IF EXISTS divisas.capitals;
+
+
+CREATE TABLE divisas.users(
         id SERIAL PRIMARY KEY,
         name VARCHAR(30) NOT NULL,
         pass VARCHAR(30) NOT NULL,
@@ -20,53 +47,59 @@ CREATE TABLE users(
         user_name VARCHAR(10) NOT NULL UNIQUE
 );
 
-CREATE TABLE types(
+CREATE TABLE divisas.types(
         id SERIAL PRIMARY KEY,
         name VARCHAR(15) NOT NULL
 );
-CREATE TABLE stocks(
+CREATE TABLE divisas.stocks(
         code CHAR(3) PRIMARY KEY,
         name VARCHAR(15) NOT NULL UNIQUE,
         value FLOAT NOT NULL
 );
-CREATE TABLE priorities(
+CREATE TABLE divisas.priorities(
         id SERIAL PRIMARY KEY,
-        stk_code CHAR(3) REFERENCES stocks(code),
-        id_user INT REFERENCES users(id)
+        stk_code CHAR(3) REFERENCES divisas.stocks(code),
+        id_user INT REFERENCES divisas.users(id)
 );
 
 
-CREATE TABLE interests(
-        type INT REFERENCES types(id),
-        stk_code CHAR(3) REFERENCES stocks(code),
-        percentage DECIMAL(5,2) NOT NULL,
-        PRIMARY KEY(type, stk_code)
+CREATE TABLE divisas.interests(
+        id SMALLIN PRIMARY KEY,
+        type INT REFERENCES divisas.types(id),
+        stk_code CHAR(3) REFERENCES divisas.stocks(code),
+        percentage DECIMAL(5,2) NOT NULL
 );
-CREATE TABLE transactions(
+CREATE TABLE divisas.transactions(
         id INT PRIMARY KEY,
-        id_user INT REFERENCES users(id),
-        id_type INT REFERENCES types(id),
-        stk_from CHAR(3) REFERENCES stocks(code),
-        stk_to CHAR(3) REFERENCES stocks(code),
-        amount amount,
+        id_user INT REFERENCES divisas.users(id),
+        id_type INT REFERENCES divisas.types(id),
+        stk_from CHAR(3) REFERENCES divisas.stocks(code),
+        stk_to CHAR(3) REFERENCES divisas.stocks(code),
+        amount FLOAT NOT NULL,
         date TIMESTAMP NOT NULL,
-        interest INT 
+        interest_id INT REFERENCES divisas.interest(id) 
 );
 
-CREATE TABLE capitals(
+CREATE TABLE divisas.capitals(
         id INT PRIMARY KEY,
-        stk_code CHAR(3) REFERENCES stocks(code),
-        id_user INT REFERENCES users(id),
-        amount amount
+        stk_code CHAR(3) REFERENCES divisas.stocks(code),
+        id_user INT REFERENCES divisas.users(id),
+        amount INT  NOT NULL CHECK (amount >= 0)
 );
+
 
 --CREACION DE INDICE TABLA TRANSACCIONES
-CREATE INDEX id_transaccion ON transactions(id);
+CREATE INDEX id_transaccion ON divisas.transactions(id);
+
 
 --INSERCIONES GENERALES
 INSERT INTO types(name) VALUES('Retiro');
 INSERT INTO types(name) VALUES('Consignacion');
 INSERT INTO types(name) VALUES('Cambio');
+
+--CARGA MASIVA DE DATOS
+--COPY divisas.users(names, pass, email, user_name) FROM './usuarios.csv' DELIMITER ',' CSV HEADER;
+--COPY divisas.stocks FROM './divisas.csv' DELIMITER ',' CSV HEADER; 
 
 --#PROCEDURES
 --##INSERCIONES
@@ -180,7 +213,7 @@ ELSE
 END;
 
 
---VISTAS
+--GANANCIAS
 CREATE OR REPLACE VIEW ganancias AS
 (SELECT SUM(amount*interest) AS ganancias
 FROM transactions);
@@ -191,5 +224,17 @@ SELECT * FROM transactions;
 SELECT * FROM capitals;
 SELECT * FROM users;
 SELECT * FROM stocks;
+
+
+--TRANSACCIONES REALIZADAS POR UN USUARIO
+CREATE OR REPLACE VIEW txu AS(
+SELECT SUM() OVER(PARTITION BY user_name) AS total_transacciones, user_name FORM (SELECT u.user_name FROM users u INNER JOIN transaccions t ON u.user_name =  t.id_user) AS ut;
+);
+
+--Los usuarios con más transacciones
+SELECT RANK() OVER(total_transacciones), u.* FROM txu;
+
+
+
 
 
