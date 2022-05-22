@@ -60,14 +60,6 @@ CREATE TABLE divisas.priorities(
         id_user INT REFERENCES divisas.users(id)
 );
 
-/*
-CREATE TABLE divisas.interests(
-        id SMALLINT PRIMARY KEY,
-        type INT REFERENCES divisas.types(id),
-        stk_code CHAR(3) REFERENCES divisas.stocks(code),
-        percentage DECIMAL(5,2) NOT NULL
-);
-*/
 CREATE TABLE divisas.transactions(
         id INT PRIMARY KEY,
         id_user INT REFERENCES divisas.users(id),
@@ -258,7 +250,8 @@ SELECT RANK() OVER(ORDER BY value DESC) FROM divisas.stocks;
 
 --TRANSACCIONES REALIZADAS POR UN USUARIO
 CREATE OR REPLACE VIEW txu AS(
-SELECT SUM() OVER(PARTITION BY user_name) AS total_transacciones, user_name FROM (SELECT u.user_name FROM divisas.users u INNER JOIN divisas.transactions t ON u.id =  t.id_user) AS ut
+SELECT COUNT(user_name) AS total_transacciones, user_name FROM (SELECT u.user_name FROM divisas.users u INNER JOIN divisas.transactions t ON u.id =  t.id_user) AS ut
+GROUP BY user_name;
 );
 
 --Los usuarios con más transacciones
@@ -266,7 +259,7 @@ SELECT RANK() OVER(total_transacciones), u.* FROM txu;
 
 --Monedas con más transacciones:
 --A las que más se mueve dinero
-SELECT s.name, r.total_maount
+SELECT s.name, r.total_amount
 FROM divisas.stocks s
 INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_to FROM divisas.transactions GROUP BY stk_to) AS t) AS r
 ON t.stock = s.code;
