@@ -185,6 +185,8 @@ CREATE OR REPLACE PROCEDURE borrarPrioridad(moneda amount, id_usuario INT)
 
 --##Calcular modena a euro
 CREATE OR REPLACE FUNCTION stk_to_eur(stk CHAR(3), amount amount)
+	LANGUAGE 'plpgsql'
+        AS
 	$$
 		RETURNS DECIMAL(20,5);
 	BEIGN
@@ -194,6 +196,8 @@ CREATE OR REPLACE FUNCTION stk_to_eur(stk CHAR(3), amount amount)
 
 --##Calcular euro a moneda
 CREATE OR REPLACE FUNCTION eur_to_stk(stk CHAR(3), amount amount)
+	LANGUAGE 'plpgsql'
+        AS
 	$$
 		RETURNS DECIMAL(20,5);
 	BEIGN
@@ -202,6 +206,8 @@ CREATE OR REPLACE FUNCTION eur_to_stk(stk CHAR(3), amount amount)
 	$$
 --##Calcular la conversión de una a otra moneda
 CREATE OR REPLACE FUNCTION stk_to_stk(stk_from CHAR(3), stk_to CHAR(3), amount amount)
+	LANGUAGE 'plpgsql'
+        AS
 	$$
 		RETURNS DECIMAL(20,5);
 	BEIGN
