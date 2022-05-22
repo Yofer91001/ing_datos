@@ -18,7 +18,7 @@ GRANT developer TO valentina;
 
 CREATE ROLE administrator;
 CREATE USER nelson WITH PASSWORD 'admin123';
-GRANT ALL ON ALL TABLES IN SCHEMA divisas TO administrator WITH GRANT OPTION;
+GRANT ALL ON ALL TABLES IN SCHEMA divisas TO administrator;
 GRANT administrator TO nelson;
 
 
