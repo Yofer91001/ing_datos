@@ -194,15 +194,15 @@ CREATE OR REPLACE FUNCTION actualizarCapitales()
 	BEGIN
 		IF (NEW.id_type = 2) AND NOT EXISTS (SELECT * FROM capitals c WHERE c.id_user = NEW.id_user AND stk_code = NEW.stk_to) THEN
 		
-			INSERT INTO capitals( stk_code, id_user, amount) VALUES( moneda, id_usuario, cantidad);
+			INSERT INTO divisas.capitals( stk_code, id_user, amount) VALUES( moneda, id_usuario, cantidad);
 			
 		ELSE	
 		
 			IF NEW.id_type = 1 OR NEW.id_type = 3 THEN
-				UPDATE capitals c SET c.amount = c.amount - NEW.amount*1.03 WHERE stk_code = NEW.stk_from AND c.id_user = NEW.id_user;
+				UPDATE divisas.capitals c SET c.amount = c.amount - NEW.amount*1.03 WHERE stk_code = NEW.stk_from AND c.id_user = NEW.id_user;
 			END IF;
 			IF NEW.id_type = 3 OR NEW.id_type = 2 THEN
-				UPDATE capitals c SET c.amount = c.amount - NEW.amount*1.03 WHERE stk_code = NEW.stk_to AND c.id_user = NEW.id_user;
+				UPDATE divisas.capitals c SET c.amount = c.amount - NEW.amount*1.03 WHERE stk_code = NEW.stk_to AND c.id_user = NEW.id_user;
 			END IF;
 		END IF;
 		RETURN NEW;
