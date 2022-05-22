@@ -90,7 +90,7 @@ CREATE OR REPLACE PROCEDURE insertUser(name VARCHAR(30), pass VARCHAR(30), email
   LANGUAGE 'plpgsql'
   AS $$
   BEGIN
-  	INSERT INTO users(name, pass, email, user_name) VALUES (name, pass, email, user_name);
+  	INSERT INTO divisas.users(name, pass, email, user_name) VALUES (name, pass, email, user_name);
   END;
   $$;
   
@@ -98,7 +98,7 @@ CREATE OR REPLACE PROCEDURE insertStock(codigo CHAR(3), nombre VARCHAR(15), valo
   LANGUAGE 'plpgsql'
   AS $$
   BEGIN
-  	INSERT INTO stocks(code, name, value) VALUES(codigo, nombre, valor);
+  	INSERT INTO divisas.stocks(code, name, value) VALUES(codigo, nombre, valor);
   END;
   $$;
   
@@ -106,28 +106,28 @@ CREATE OR REPLACE PROCEDURE insertPriority(moneda CHAR(3), id_usuario INT)
   LANGUAGE 'plpgsql'
   AS $$
   BEGIN
-  	INSERT INTO priorities(stk_code, id_user) VALUES(moneda, id_usuario);
+  	INSERT INTO divisas.priorities(stk_code, id_user) VALUES(moneda, id_usuario);
   END;
   $$;
   
  
-CREATE OR REPLACE PROCEDURE insertTransaction(identificador INT, id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad amount)
+CREATE OR REPLACE PROCEDURE insertTransaction( id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad amount)
   LANGUAGE 'plpgsql'
   AS $$
   BEGIN
   	IF moneda_f IS NOT NULL THEN
 		IF moneda_i IS NOT NULL THEN
-			INSERT INTO transactions(id, id_user, id_type, stk_from, stk_to, amount) VALUES(identificador, id_usuario, id_tipo, moneda_i, moneda_f, cantidad);
+			INSERT INTO divisas.transactions( id_user, id_type, stk_from, stk_to, amount) VALUES( id_usuario, id_tipo, moneda_i, moneda_f, cantidad);
 			IF EXISTS (SELECT amount FROM capitals WHERE id_user = id_usuario AND stk_code = moneda_i AND amount > cantidad*1.03) THEN
 				COMMIT;
 			ELSE
 				ROLLBACK;
 			END IF;
 		ELSE
-			INSERT INTO transactions(id, id_user, id_type, stk_to, amount) VALUES(identificador, id_usuario, id_tipo, moneda_f, cantidad);
+			INSERT INTO divisas.transactions( id_user, id_type, stk_to, amount) VALUES( id_usuario, id_tipo, moneda_f, cantidad);
 		END IF;
 	ELSE
-		INSERT INTO transactions(id, id_user, id_type, stk_from, amount) VALUES(identificador, id_usuario, id_tipo, moneda_i, cantidad);
+		INSERT INTO divisas.transactions( id_user, id_type, stk_from, amount) VALUES( id_usuario, id_tipo, moneda_i, cantidad);
 	END IF;
   END;
   $$;
@@ -140,7 +140,7 @@ CREATE OR REPLACE PROCEDURE borrarPrioridad(moneda amount, id_usuario INT)
         AS
         $$
 	BEGIN
-        DELETE FROM priorities WHERE stk_code = moneda AND id_user = id_usuario;
+        DELETE FROM divisas.priorities WHERE stk_code = moneda AND id_user = id_usuario;
 	END;
         $$;
 
