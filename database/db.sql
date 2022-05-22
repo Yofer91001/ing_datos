@@ -236,6 +236,7 @@ BEGIN
 		ELSE
 			insertCapital( nr.stk_to, nr.id_user , nr.amount)
 		END IF;
+	END IF;
 END;
 
 
