@@ -75,8 +75,7 @@ CREATE TABLE divisas.transactions(
         stk_from CHAR(3) REFERENCES divisas.stocks(code),
         stk_to CHAR(3) REFERENCES divisas.stocks(code),
         amount amount NOT NULL,
-        date TIMESTAMP NOT NULL,
-        interest_id INT REFERENCES divisas.interest(id) 
+        date TIMESTAMP NOT NULL
 );
 
 CREATE TABLE divisas.capitals(
