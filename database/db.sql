@@ -162,10 +162,10 @@ CREATE OR REPLACE PROCEDURE actualizarCapital(id_usuario INT, id_tipo INT, moned
         $$
 	BEGIN
 		IF id_tipo = 1 OR id_tipo = 3 THEN
-			UPDATE capitals c SET c.amount = c.amount - cantidad*1,03 WHERE stk_code = moneda_i AND c.id_user = id_usuario;
+			UPDATE capitals c SET c.amount = c.amount - cantidad*1.03 WHERE stk_code = moneda_i AND c.id_user = id_usuario;
 		END IF;
 		IF nr.id_type = 3 OR nr.id_type = 2 THEN
-			UPDATE capitals c SET c.amount = c.amount - cantidad*1,03 WHERE stk_code = moneda_f AND c.id_user = id_usuario;
+			UPDATE capitals c SET c.amount = c.amount - cantidad*1.03 WHERE stk_code = moneda_f AND c.id_user = id_usuario;
 		END IF;
 
 	END;
