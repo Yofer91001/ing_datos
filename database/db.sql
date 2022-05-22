@@ -132,7 +132,7 @@ CREATE OR REPLACE PROCEDURE insertTransaction(identificador INT, id_usuario INT,
   END;
   $$;
   
-CREATE OR REPLACE PROCEDURE insertCapital(identificador INT, moneda CHAR(3), id_usuario INT, cantidad amount)
+CREATE OR REPLACE PROCEDURE insertCapital(moneda CHAR(3), id_usuario INT, cantidad amount)
   LANGUAGE 'plpgsql'
   AS $$
   BEGIN
@@ -214,10 +214,10 @@ CREATE OR REPLACE PROCEDURE actualizarCapitales(id_usuario INT, id_tipo INT, mon
         $$
 	BEGIN
 		IF (id_tipo = 2) AND NOT EXISTS (SELECT * FROM capitals c WHERE c.id_user = id_usuario AND stk_code = moneda_f) THEN
-			insertCapital( moneda_f, nr.id_user , nr.amount)
+			EXECUTE PROCEDURE insertCapital( moneda_f, nr.id_user , nr.amount)
 		ELSE	
 		
-			actualizarCapital(id_usuario, id_tipo, moneda_i, moneda_f , cantidad)
+			EXECUTE PROCEDURE actualizarCapital(id_usuario, id_tipo, moneda_i, moneda_f , cantidad)
 		END IF;
 	END;
         $$;
