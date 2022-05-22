@@ -243,7 +243,7 @@ END;
 --GANANCIAS
 CREATE OR REPLACE VIEW ganancias AS
 (SELECT SUM(amount*interest) AS ganancias
-FROM transactions);
+FROM divisas.transactions);
 
 
 --CONSULTAS GENERALES:
