@@ -117,17 +117,17 @@ CREATE OR REPLACE PROCEDURE insertTransaction( id_usuario INT, id_tipo INT, mone
   BEGIN
   	IF moneda_f IS NOT NULL THEN
 		IF moneda_i IS NOT NULL THEN
-			INSERT INTO divisas.transactions( id_user, id_type, stk_from, stk_to, amount) VALUES( id_usuario, id_tipo, moneda_i, moneda_f, cantidad);
+			INSERT INTO divisas.transactions( id_user, id_type, stk_from, stk_to, amount) VALUES( id_usuario, id_tipo, moneda_i, moneda_f, cantidad, NOW());
 			IF EXISTS (SELECT amount FROM capitals WHERE id_user = id_usuario AND stk_code = moneda_i AND amount > cantidad*1.03) THEN
 				COMMIT;
 			ELSE
 				ROLLBACK;
 			END IF;
 		ELSE
-			INSERT INTO divisas.transactions( id_user, id_type, stk_to, amount) VALUES( id_usuario, id_tipo, moneda_f, cantidad);
+			INSERT INTO divisas.transactions( id_user, id_type, stk_to, amount) VALUES( id_usuario, id_tipo, moneda_f, cantidad, NOW());
 		END IF;
 	ELSE
-		INSERT INTO divisas.transactions( id_user, id_type, stk_from, amount) VALUES( id_usuario, id_tipo, moneda_i, cantidad);
+		INSERT INTO divisas.transactions( id_user, id_type, stk_from, amount) VALUES( id_usuario, id_tipo, moneda_i, cantidad, NOW());
 	END IF;
   END;
   $$;
