@@ -1,10 +1,10 @@
-FROM postres
+FROM postgres
 
-WORKDIR /
+WORKDIR ./
 
 EXPOSE 5432 
 
-RUN sudo su -postres; \i ./databas/db.sql; \q
+RUN sudo su -postres; \i ./database/creation.sql;\c exval; ./settings.sql;  \q
 
 
 
