@@ -230,7 +230,7 @@ ON transactions
 REFERENCING NEW ROW AS nr
 FOR EACH ROW
 BEGIN
-	IF nr.id_type = 2 THEN
+	IF (nr.id_type = 2) THEN
 		IF EXIST (SELECT * FROM capitals c WHERE c.id_user = nr.id_user AND stk_code = nr.stk_to) THEN
 			actualizarCapital(nr.id_user, nr.id_type, nr.stk_from, nr.stk_to , nr.amount);
 		ELSE
