@@ -200,8 +200,11 @@ CREATE OR REPLACE FUNCTION eur_to_stk(stk CHAR(3), amount amount)
 	LANGUAGE 'plpgsql'
         AS
 	$$
+	DECLARE 
+		total DECIMAL(20,5)
 	BEIGN
-		RETURN (SELECT amount/valor FROM (SELECT value AS total FROM divisas.stocks WHERE code = stk_code) AS val) AS tot;
+		SELECT tota INTO total FROM (SELECT amount/valor AS tota FROM (SELECT value AS total FROM divisas.stocks WHERE code = stk_code) AS val) AS tot;
+		RETURN total;
 	END;
 	$$
 --##Calcular la conversión de una a otra moneda
