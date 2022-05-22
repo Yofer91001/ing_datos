@@ -208,21 +208,26 @@ CREATE OR REPLACE FUNCTION stk_to_stk(stk_from CHAR(3), stk_to CHAR(3), amount a
 
 
 
+CREATE OR REPLACE PROCEDURE actualizarCapitales(id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad amount)
+        LANGUAGE 'plpgsql'
+        AS
+        $$
+	BEGIN
+		IF (id_tipo = 2) THEN
+			IF NOT EXIST (SELECT * FROM capitals c WHERE c.id_user = id_usuario AND stk_code = moneda_f) THEN
+				insertCapital( moneda_f, nr.id_user , nr.amount)
+			END IF;	
+		END IF;
+		actualizarCapital(id_usuario, id_tipo, moneda_i, moneda_f , cantidad);
+	END;
+        $$;
 
 --#TRIGGERS
 CREATE OR REPLACE TRIGGER actualizar_capitales AFTER INSERT 
 ON transactions
 REFERENCING NEW ROW AS nr
 FOR EACH ROW
-BEGIN
-	IF (nr.id_type = 2) THEN
-		IF EXIST (SELECT * FROM capitals c WHERE c.id_user = nr.id_user AND stk_code = nr.stk_to) THEN
-			actualizarCapital(nr.id_user, nr.id_type, nr.stk_from, nr.stk_to , nr.amount);
-		ELSE
-			insertCapital( nr.stk_to, nr.id_user , nr.amount)
-		END IF;
-	END IF;
-END;
+EXECUTE PROCEDURE actualizarCapitales(nr.id_user, id_type, nr.stk_from, nr.stk_to, nr.amount);
 
 
 --GANANCIAS
