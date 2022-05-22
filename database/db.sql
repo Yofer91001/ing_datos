@@ -99,7 +99,7 @@ CREATE OR REPLACE PROCEDURE insertUser(name VARCHAR(30), pass VARCHAR(30), email
   BEGIN
   	INSERT INTO users(name, pass, email, user_name) VALUES (name, pass, email, user_name);
   END;
-  $$
+  $$;
   
 CREATE OR REPLACE PROCEDURE insertStock(codigo CHAR(3), nombre VARCHAR(15), valor FLOAT)
   LANGUAGE 'plpgsql'
@@ -107,7 +107,7 @@ CREATE OR REPLACE PROCEDURE insertStock(codigo CHAR(3), nombre VARCHAR(15), valo
   BEGIN
   	INSERT INTO stocks(code, name, value) VALUES(codigo, nombre, valor);
   END;
-  $$ 
+  $$;
   
 CREATE OR REPLACE PROCEDURE insertPriority(moneda CHAR(3), id_usuario INT)
   LANGUAGE 'plpgsql'
@@ -115,7 +115,7 @@ CREATE OR REPLACE PROCEDURE insertPriority(moneda CHAR(3), id_usuario INT)
   BEGIN
   	INSERT INTO priorities(stk_code, id_user) VALUES(moneda, id_usuario);
   END;
-  $$
+  $$;
   
  
 CREATE OR REPLACE PROCEDURE insertTransaction(identificador INT, id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad amount)
@@ -137,7 +137,7 @@ CREATE OR REPLACE PROCEDURE insertTransaction(identificador INT, id_usuario INT,
 		INSERT INTO transactions(id, id_user, id_type, stk_from, amount) VALUES(identificador, id_usuario, id_tipo, moneda_i, cantidad);
 	END IF;
   END;
-  $$
+  $$;
   
 CREATE OR REPLACE PROCEDURE insertCapital(identificador INT, moneda CHAR(3), id_usuario INT, cantidad amount)
   LANGUAGE 'plpgsql'
@@ -145,7 +145,7 @@ CREATE OR REPLACE PROCEDURE insertCapital(identificador INT, moneda CHAR(3), id_
   BEGIN
   	INSERT INTO capitals( stk_code, id_user, amount) VALUES( moneda, id_usuario, cantidad);
   END;
-  $$
+  $$;
 
 --#ACTUALIZACIONES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 CREATE OR REPLACE PROCEDURE actualizarCapital(id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad amount)
@@ -187,7 +187,7 @@ CREATE OR REPLACE FUNCTION stk_to_eur(stk CHAR(3), amount amount)
 		SELECT SUM(tota) INTO total FROM (SELECT amount*valor FROM (SELECT value AS total FROM divisas.stocks WHERE code = stk_code) AS val) AS tot;
 		RETURN total;
 	END;
-	$$
+	$$;
 
 --##Calcular euro a moneda
 CREATE OR REPLACE FUNCTION eur_to_stk(stk CHAR(3), amount amount)
@@ -201,7 +201,7 @@ CREATE OR REPLACE FUNCTION eur_to_stk(stk CHAR(3), amount amount)
 		SELECT SUM(tota) INTO total FROM (SELECT amount/valor AS tota FROM (SELECT value AS total FROM divisas.stocks WHERE code = stk_code) AS val) AS tot;
 		RETURN total;
 	END;
-	$$
+	$$;
 --##Calcular la conversión de una a otra moneda
 CREATE OR REPLACE FUNCTION stk_to_stk(stk_from CHAR(3), stk_to CHAR(3), amount amount)
 	RETURNS amount
@@ -211,7 +211,7 @@ CREATE OR REPLACE FUNCTION stk_to_stk(stk_from CHAR(3), stk_to CHAR(3), amount a
 	BEGIN
 		RETURN eur_to_stk(stk_to , stk_to_eur(stk_from, amount));
 	END;
-	$$
+	$$;
 
 
 
