@@ -131,7 +131,7 @@ CREATE OR REPLACE PROCEDURE insertTransaction(identificador INT, id_usuario INT,
   AS $$
   BEGIN
   	IF moneda_f IS NOT NULL THEN
-		IF moneda_i NOT NULL THEN
+		IF moneda_i IS NOT NULL THEN
 			INSERT INTO transactions(id, id_user, id_type, stk_from, stk_to, amount) VALUES(identificador, id_usuario, id_tipo, moneda_i, moneda_f, cantidad);
 			IF EXISTS (SELECT amount FROM capitals WHERE id_user = id_usuario AND stk_code = moneda_i AND amount > cantidad*1,03) THEN
 				COMMIT;
