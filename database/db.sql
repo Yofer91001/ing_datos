@@ -1,8 +1,9 @@
+--Creación de la base de datos
 CREATE DATABASE exval;
 
 --\c exval
 
-
+--Creación del esquema
 CREATE SCHEMA divisas;
 
 --CREACIÓN DE LOS ROLES Y USUARIOS DE LA BASE DE DATOS
@@ -14,9 +15,6 @@ REVOKE DELETE ON ALL TABLES IN SCHEMA divisas FROM developer;
 GRANT developer TO yofer;
 GRANT developer TO valentina;
 
---CREACION DE DOMINIO PARA AMOUNT
-CREATE DOMAIN amount AS
-	FLOAT NOT NULL CHECK (value >= 0);
 
 CREATE ROLE administrator WITH PASSWORD 'admin123';
 CREATE USER nelson;
@@ -28,6 +26,9 @@ CREATE ROLE data_analytics WITH PASSWORD 'analytics';
 CREATE USER analitico;
 GRANT SELECT ON ALL TABLES IN SCHEMA divisas TO data_analytics;
 
+--CREACION DE DOMINIO PARA AMOUNT
+CREATE DOMAIN amount AS
+	FLOAT NOT NULL CHECK (value >= 0);
 
  
 DROP TABLE IF EXISTS divisas.users;
@@ -62,29 +63,30 @@ CREATE TABLE divisas.priorities(
         id_user INT REFERENCES divisas.users(id)
 );
 
-
+/*
 CREATE TABLE divisas.interests(
         id SMALLINT PRIMARY KEY,
         type INT REFERENCES divisas.types(id),
         stk_code CHAR(3) REFERENCES divisas.stocks(code),
         percentage DECIMAL(5,2) NOT NULL
 );
+*/
 CREATE TABLE divisas.transactions(
         id INT PRIMARY KEY,
         id_user INT REFERENCES divisas.users(id),
         id_type INT REFERENCES divisas.types(id),
         stk_from CHAR(3) REFERENCES divisas.stocks(code),
         stk_to CHAR(3) REFERENCES divisas.stocks(code),
-        amount FLOAT NOT NULL,
+        amount amount NOT NULL,
         date TIMESTAMP NOT NULL,
         interest_id INT REFERENCES divisas.interest(id) 
 );
 
 CREATE TABLE divisas.capitals(
-        id INT PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         stk_code CHAR(3) REFERENCES divisas.stocks(code),
         id_user INT REFERENCES divisas.users(id),
-        amount INT  NOT NULL CHECK (amount >= 0)
+        amount amount  NOT NULL CHECK (amount >= 0)
 );
 
 
@@ -127,20 +129,24 @@ CREATE OR REPLACE PROCEDURE insertPriority(moneda CHAR(3), id_usuario INT)
   END;
   $$
   
-CREATE OR REPLACE PROCEDURE insertInterest(tipo INT, moneda CHAR(3), porcentaje DECIMAL)
-  LANGUAGE 'plpgsql'
-  AS $$
-  BEGIN
-  	INSERT INTO interests(type, stk_code, percentage) VALUES(tipo, moneda, porcentaje);
-  END;
-  $$
-  
+ 
 CREATE OR REPLACE PROCEDURE insertTransaction(identificador INT, id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad amount)
   LANGUAGE 'plpgsql'
   AS $$
   BEGIN
-  	
-  	INSERT INTO transactions(id, id_user, id_type, stk_from, stk_to, amount) VALUES(identificador, id_usuario, id_tipo, moneda_i, moneda_f, cantidad);
+  	IF moneda_f NOT NULL THEN
+		IF moneda_i NOT NULL THEN
+			INSERT INTO transactions(id, id_user, id_type, stk_from, stk_to, amount) VALUES(identificador, id_usuario, id_tipo, moneda_i, moneda_f, cantidad);
+			IF EXISTS (SELECT amount FROM capitals WHERE id_user = id_usuario AND stk_code = moneda_i AND amount > cantidad*1,03) THEN
+				COMMIT;
+			ELSE
+				ROLLBACK;
+		ELSE
+			INSERT INTO transactions(id, id_user, id_type, stk_to, amount) VALUES(identificador, id_usuario, id_tipo, moneda_f, cantidad);
+		END IF;
+	ELSE
+		INSERT INTO transactions(id, id_user, id_type, stk_from, amount) VALUES(identificador, id_usuario, id_tipo, moneda_i, cantidad);
+	END IF;
   END;
   $$
   
@@ -148,31 +154,26 @@ CREATE OR REPLACE PROCEDURE insertCapital(identificador INT, moneda CHAR(3), id_
   LANGUAGE 'plpgsql'
   AS $$
   BEGIN
-  	INSERT INTO capitals(id, stk_code, id_user, amount) VALUES(identificador, moneda, id_usuario, cantidad);
+  	INSERT INTO capitals( stk_code, id_user, amount) VALUES( moneda, id_usuario, cantidad);
   END;
   $$
 
---#ACTUALIZACIONES
-CREATE OR REPLACE PROCEDURE actualizarCapital(id_usuario INT, id_tipo INT, moneda CHAR(3), cantidad amount, interest amount)
+--#ACTUALIZACIONES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+CREATE OR REPLACE PROCEDURE actualizarCapital(id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad amount)
         LANGUAGE 'plpgsql'
         AS
         $$
 	BEGIN
-        UPDATE capitals SET amount = amount - cantidad - interest WHERE id_user = id_usuario AND id_type = id_tipo AND stk_code = moneda;
+		IF id_tipo = 1 OR id_tipo = 3 THEN
+			UPDATE capitals c SET c.amount = c.amount - cantidad*1,03 WHERE stk_code = moneda_i AND c.id_user = id_usuario;
+		END IF;
+		IF nr.id_type = 3 OR nr.id_type = 2 THEN
+			UPDATE capitals c SET c.amount = c.amount - cantidad*1,03 WHERE stk_code = moneda_f AND c.id_user = id_usuario;
+		END IF;
+
 	END;
         $$;
 
-
-CREATE OR REPLACE PROCEDURE actualizarInteresTransaccion(transaccion_id INT)
-        LANGUAGE 'plpgsql'
-        AS
-        $$
-        DECLARE myinsterest INT;
-	BEGIN
-	SELECT * INTO myinsterest FROM calcularInteres(transaccion_id);
-        UPDATE transactions SET interest = myinterest WHERE transactions.id = transaccion_id;
-	END;
-        $$;
 
 CREATE OR REPLACE PROCEDURE borrarPrioridad(moneda amount, id_usuario INT)
         LANGUAGE 'plpgsql'
@@ -184,44 +185,48 @@ CREATE OR REPLACE PROCEDURE borrarPrioridad(moneda amount, id_usuario INT)
         $$;
 
 --#FUNCIONES
---##CALCULAR INTERES POR TRANSACCION
-CREATE OR REPLACE FUNCTION calcularInteres(transaccion_id INT)
-                RETURNS INT
-        $$
-                DECLARE porcentaje INT, cantidad INT
-        BEGIN
-                WITH transaccion AS (SELECT * FROM transactions WHERE id = transaccion_id);
-                SELECT i.percentage INTO porcentaje FROM interest i INNER JOIN transaccion t ON t.stk_from = i.stk_code AND t.id_type = i.type;
-                SELECT t.amount INTO cantidad FROM interest i INNER JOIN transaccion t ON t.stk_from = i.stk_code AND t.id_type = i.type)
-                RETURN porcentaje * cantidad;
-        END;
-        $$
-
---##Calcular la conversión de una a otra moneda
-CREATE OR REPLACE FUNCTION stk_to_stk(stk_from CHAR(3), stk_to CHAR())
-	$$
-		RETURNS DECIMAL
-	BEIGN
-		
-	
-	$$
 
 --##Calcular modena a euro
+CREATE OR REPLACE FUNCTION stk_to_eur(stk CHAR(3), amount amount)
+	$$
+		RETURNS DECIMAL(20,5)
+	BEIGN
+		RETURN (SELECT amount*valor FROM (SELECT value AS total FROM divisas.stocks WHERE code = stk_code) AS val) AS tot;
+	END;
+	$$
 
 --##Calcular euro a moneda
+CREATE OR REPLACE FUNCTION eur_to_stk(stk CHAR(3), amount amount)
+	$$
+		RETURNS DECIMAL(20,5)
+	BEIGN
+		RETURN (SELECT amount/valor FROM (SELECT value AS total FROM divisas.stocks WHERE code = stk_code) AS val) AS tot;
+	END;
+	$$
+--##Calcular la conversión de una a otra moneda
+CREATE OR REPLACE FUNCTION stk_to_stk(stk_from CHAR(3), stk_to CHAR(3), amount amount)
+	$$
+		RETURNS DECIMAL(20,5)
+	BEIGN
+		RETURN eur_to_stk(stk_to , stk_to_eur(stk_from, amount));
+	END;
+	$$
+
+
+
 
 --#TRIGGERS
-CREATE OR REPLACE TRIGGER insertar_interes AFTER INSERT 
+CREATE OR REPLACE TRIGGER actualizar_capitales AFTER INSERT 
 ON transactions
 REFERENCING NEW ROW AS nr
 FOR EACH ROW
-IF EXISTS (SELECT * FROM capitals WHERE id_user = nr.id_user AND stk_code = nr.stk_from AND amount > calcularInteres(nr.id))
 BEGIN
-        actualizarInteresTransaccion(nr.id);
-        IF 
-ELSE
-
-
+	IF nr.id_type = 2 THEN
+		IF EXIST (SELECT * FROM capitals c WHERE c.id_user = nr.id_user AND stk_code = nr.stk_to) THEN
+			actualizarCapital(nr.id_user, nr.id_type, nr.stk_from, nr.stk_to , nr.amount);
+		ELSE
+			insertCapital( nr.stk_to, nr.id_user , nr.amount)
+		END IF;
 END;
 
 
