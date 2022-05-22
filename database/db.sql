@@ -132,30 +132,8 @@ CREATE OR REPLACE PROCEDURE insertTransaction(identificador INT, id_usuario INT,
   END;
   $$;
   
-CREATE OR REPLACE PROCEDURE insertCapital(moneda CHAR(3), id_usuario INT, cantidad amount)
-  LANGUAGE 'plpgsql'
-  AS $$
-  BEGIN
-  	INSERT INTO capitals( stk_code, id_user, amount) VALUES( moneda, id_usuario, cantidad);
-  END;
-  $$;
 
 --#ACTUALIZACIONES!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-CREATE OR REPLACE PROCEDURE actualizarCapital(id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad amount)
-        LANGUAGE 'plpgsql'
-        AS
-        $$
-	BEGIN
-		IF id_tipo = 1 OR id_tipo = 3 THEN
-			UPDATE capitals c SET c.amount = c.amount - cantidad*1.03 WHERE stk_code = moneda_i AND c.id_user = id_usuario;
-		END IF;
-		IF nr.id_type = 3 OR nr.id_type = 2 THEN
-			UPDATE capitals c SET c.amount = c.amount - cantidad*1.03 WHERE stk_code = moneda_f AND c.id_user = id_usuario;
-		END IF;
-
-	END;
-        $$;
-
 
 CREATE OR REPLACE PROCEDURE borrarPrioridad(moneda amount, id_usuario INT)
         LANGUAGE 'plpgsql'
@@ -208,26 +186,34 @@ CREATE OR REPLACE FUNCTION stk_to_stk(stk_from CHAR(3), stk_to CHAR(3), amount a
 
 
 
-CREATE OR REPLACE PROCEDURE actualizarCapitales(id_usuario INT, id_tipo INT, moneda_i CHAR(3), moneda_f CHAR(3), cantidad amount)
-        LANGUAGE 'plpgsql'
+CREATE OR REPLACE FUNCTION actualizarCapitales()
+        RETURNS TRIGGER
+	LANGUAGE 'plpgsql'
         AS
         $$
 	BEGIN
-		IF (id_tipo = 2) AND NOT EXISTS (SELECT * FROM capitals c WHERE c.id_user = id_usuario AND stk_code = moneda_f) THEN
-			EXECUTE PROCEDURE insertCapital(moneda_f, id_usuario , cantidad)
+		IF (NEW.id_type = 2) AND NOT EXISTS (SELECT * FROM capitals c WHERE c.id_user = NEW.id_user AND stk_code = NEW.stk_to) THEN
+		
+			INSERT INTO capitals( stk_code, id_user, amount) VALUES( moneda, id_usuario, cantidad);
+			
 		ELSE	
 		
-			EXECUTE PROCEDURE actualizarCapital(id_usuario, id_tipo, moneda_i, moneda_f , cantidad)
+			IF NEW.id_type = 1 OR NEW.id_type = 3 THEN
+				UPDATE capitals c SET c.amount = c.amount - NEW.amount*1.03 WHERE stk_code = NEW.stk_from AND c.id_user = NEW.id_user;
+			END IF;
+			IF NEW.id_type = 3 OR NEW.id_type = 2 THEN
+				UPDATE capitals c SET c.amount = c.amount - NEW.amount*1.03 WHERE stk_code = NEW.stk_to AND c.id_user = NEW.id_user;
+			END IF;
 		END IF;
+		RETURN NEW;
 	END;
         $$;
 
 --#TRIGGERS
 CREATE OR REPLACE TRIGGER actualizar_capitales AFTER INSERT 
-ON transactions
-REFERENCING NEW ROW AS nr
+ON divisas.transactions
 FOR EACH ROW
-EXECUTE PROCEDURE actualizarCapitales(nr.id_user, id_type, nr.stk_from, nr.stk_to, nr.amount);
+EXECUTE PROCEDURE actualizarCapitales();
 
 
 --GANANCIAS
