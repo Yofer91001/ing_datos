@@ -198,6 +198,17 @@ CREATE OR REPLACE FUNCTION calcularInteres(transaccion_id INT)
         $$
 
 --##Calcular la conversión de una a otra moneda
+CREATE OR REPLACE FUNCTION stk_to_stk(stk_from CHAR(3), stk_to CHAR())
+	$$
+		RETURNS DECIMAL
+	BEIGN
+		
+	
+	$$
+
+--##Calcular modena a euro
+
+--##Calcular euro a moneda
 
 --#TRIGGERS
 CREATE OR REPLACE TRIGGER insertar_interes AFTER INSERT 
