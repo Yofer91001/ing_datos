@@ -260,9 +260,9 @@ SELECT RANK() OVER(ORDER BY total_transacciones DESC), txu.* FROM txu;
 
 --Monedas con más transacciones:
 --A las que más se mueve dinero
-SELECT s.name, r.total_amount
+SELECT s.name, r.total_amount, r.rank
 FROM divisas.stocks s
-INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_to FROM divisas.transactions GROUP BY stk_to) AS t) AS r
+INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC) AS rank, stk_to AS stock, total_amount FROM (SELECT SUM(amount) AS total_amount, stk_to FROM divisas.transactions GROUP BY stk_to) AS t) AS r
 ON t.stock = s.code;
 
 --De las que más sale dinero
