@@ -137,6 +137,7 @@ CREATE OR REPLACE PROCEDURE insertTransaction(identificador INT, id_usuario INT,
 				COMMIT;
 			ELSE
 				ROLLBACK;
+			END IF;
 		ELSE
 			INSERT INTO transactions(id, id_user, id_type, stk_to, amount) VALUES(identificador, id_usuario, id_tipo, moneda_f, cantidad);
 		END IF;
