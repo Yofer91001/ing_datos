@@ -258,7 +258,7 @@ SELECT RANK() OVER(ORDER BY value DESC) FROM divisas.stocks;
 
 --TRANSACCIONES REALIZADAS POR UN USUARIO
 CREATE OR REPLACE VIEW txu AS(
-SELECT SUM() OVER(PARTITION BY user_name) AS total_transacciones, user_name FROM (SELECT u.user_name FROM divisas.users u INNER JOIN divisas.transactions t ON u.user_name =  t.id_user) AS ut;
+SELECT SUM() OVER(PARTITION BY user_name) AS total_transacciones, user_name FROM (SELECT u.user_name FROM divisas.users u INNER JOIN divisas.transactions t ON u.id =  t.id_user) AS ut
 );
 
 --Los usuarios con más transacciones
