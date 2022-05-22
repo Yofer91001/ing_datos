@@ -91,9 +91,9 @@ CREATE INDEX id_transaccion ON divisas.transactions(id);
 
 
 --INSERCIONES GENERALES
-INSERT INTO types(name) VALUES('Retiro');
-INSERT INTO types(name) VALUES('Consignacion');
-INSERT INTO types(name) VALUES('Cambio');
+INSERT INTO divisas.types(name) VALUES('Retiro');
+INSERT INTO divisas.types(name) VALUES('Consignacion');
+INSERT INTO divisas.types(name) VALUES('Cambio');
 
 --CARGA MASIVA DE DATOS
 --COPY divisas.users(names, pass, email, user_name) FROM './usuarios.csv' DELIMITER ',' CSV HEADER;
