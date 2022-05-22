@@ -248,21 +248,21 @@ FROM divisas.transactions);
 
 --CONSULTAS GENERALES:
 --Ordenar por fechas todas las transacciones
-SELECT * FROM transactions ORDER BY date;
+SELECT * FROM divisas.transactions ORDER BY date;
 
 --Mostrar las monedas que más tienen los usuarios en sus capitales
-SELECT SUM(amount) AS total_amount, stk_code FROM capitals GROUP BY stk_code ORDER BY total_amount;
+SELECT SUM(amount) AS total_amount, stk_code FROM divisas.capitals GROUP BY stk_code ORDER BY total_amount;
 
 --Seleccionar las divisas más valiosas respecto al euro
-SELECT RANK() OVER(ORDER BY value DESC) FROM stocks;
+SELECT RANK() OVER(ORDER BY value DESC) FROM divisas.stocks;
 
 --TRANSACCIONES REALIZADAS POR UN USUARIO
 CREATE OR REPLACE VIEW txu AS(
-SELECT SUM() OVER(PARTITION BY user_name) AS total_transacciones, user_name FORM (SELECT u.user_name FROM users u INNER JOIN transaccions t ON u.user_name =  t.id_user) AS ut;
+SELECT SUM() OVER(PARTITION BY user_name) AS total_transacciones, user_name FORM (SELECT u.user_name FROM divisas.users u INNER JOIN divisas.transaccions t ON u.user_name =  t.id_user) AS ut;
 );
 
 --Los usuarios con más transacciones
-SELECT RANK() OVER(total_transacciones), u.* FROM txu;
+SELECT RANK() OVER(total_transacciones), u.* FROM divisas.txu;
 
 --Monedas con más transacciones:
 --A las que más se mueve dinero
