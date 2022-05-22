@@ -216,7 +216,7 @@ CREATE OR REPLACE FUNCTION stk_to_stk(stk_from CHAR(3), stk_to CHAR(3), amount a
 	LANGUAGE 'plpgsql'
         AS
 	$$
-	BEIGN
+	BEGIN
 		RETURN eur_to_stk(stk_to , stk_to_eur(stk_from, amount));
 	END;
 	$$
