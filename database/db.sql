@@ -7,9 +7,9 @@ CREATE DATABASE exval;
 CREATE SCHEMA divisas;
 
 --CREACIÓN DE LOS ROLES Y USUARIOS DE LA BASE DE DATOS
-CREATE ROLE developer WITH PASSWORD 'developerteam';
-CREATE USER yofer;
-CREATE USER valentina;
+CREATE ROLE developer;
+CREATE USER yofer WITH PASSWORD 'yofer123';
+CREATE USER valentina WITH PASSWORD 'valentina123';
 GRANT ALL ON ALL TABLES IN SCHEMA divisas TO developer;
 REVOKE DELETE ON ALL TABLES IN SCHEMA divisas FROM developer;
 GRANT developer TO yofer;
