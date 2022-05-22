@@ -213,12 +213,12 @@ CREATE OR REPLACE PROCEDURE actualizarCapitales(id_usuario INT, id_tipo INT, mon
         AS
         $$
 	BEGIN
-		IF (id_tipo = 2) THEN
-			IF NOT EXIST (SELECT * FROM capitals c WHERE c.id_user = id_usuario AND stk_code = moneda_f) THEN
-				insertCapital( moneda_f, nr.id_user , nr.amount)
-			END IF;	
+		IF (id_tipo = 2) AND NOT EXISTS (SELECT * FROM capitals c WHERE c.id_user = id_usuario AND stk_code = moneda_f) THEN
+			insertCapital( moneda_f, nr.id_user , nr.amount)
+		ELSE	
+		
+			actualizarCapital(id_usuario, id_tipo, moneda_i, moneda_f , cantidad)
 		END IF;
-		actualizarCapital(id_usuario, id_tipo, moneda_i, moneda_f , cantidad);
 	END;
         $$;
 
