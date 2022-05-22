@@ -22,8 +22,8 @@ GRANT ALL ON ALL TABLES IN SCHEMA divisas TO administrator WITH GRANT OPTION;
 GRANT administrator TO nelson;
 
 
-CREATE ROLE data_analytics WITH PASSWORD 'analytics';
-CREATE USER analitico;
+CREATE ROLE data_analytics;
+CREATE USER analitico WITH PASSWORD 'analytics';
 GRANT SELECT ON ALL TABLES IN SCHEMA divisas TO data_analytics;
 
 --CREACION DE DOMINIO PARA AMOUNT
