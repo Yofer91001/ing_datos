@@ -283,5 +283,7 @@ INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount ASC) AS rank, stk_to AS sto
 ON r.stock = s.code
 LIMIT 1;
 
+--Numero de usuarios registrados
 
+--Usuarios con más dinero en euros
 
