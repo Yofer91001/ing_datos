@@ -197,6 +197,7 @@ CREATE OR REPLACE FUNCTION calcularInteres(transaccion_id INT)
         END;
         $$
 
+--##Calcular la conversión de una a otra moneda
 
 --#TRIGGERS
 CREATE OR REPLACE TRIGGER insertar_interes AFTER INSERT 
@@ -220,11 +221,14 @@ FROM transactions);
 
 
 --CONSULTAS GENERALES:
-SELECT * FROM transactions;
-SELECT * FROM capitals;
-SELECT * FROM users;
-SELECT * FROM stocks;
+--Ordenar por fechas todas las transacciones
+SELECT * FROM transactions ORDER BY date;
 
+--Mostrar las monedas que más tienen los usuarios en sus capitales
+SELECT SUM(amount) AS total_amount, stk_code FROM capitals GROUP BY stk_code ORDER BY total_amount;
+
+--Seleccionar las divisas más valiosas respecto al euro
+SELECT RANK() OVER(ORDER BY value DESC) FROM stocks;
 
 --TRANSACCIONES REALIZADAS POR UN USUARIO
 CREATE OR REPLACE VIEW txu AS(
@@ -234,7 +238,42 @@ SELECT SUM() OVER(PARTITION BY user_name) AS total_transacciones, user_name FORM
 --Los usuarios con más transacciones
 SELECT RANK() OVER(total_transacciones), u.* FROM txu;
 
+--Monedas con más transacciones:
+--A las que más se mueve dinero
+SELECT s.name, r.total_maount
+FROM stocks s
+INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_to FROM transactions GROUP BY stk_to) AS t) AS r
+ON t.stock = s.code;
 
+--De las que más sale dinero
+SELECT s.name, r.total_maount
+FROM stocks s
+INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_from FROM transactions GROUP BY stk_to) AS t) AS r
+ON t.stock = s.code;
+
+--A la que más se mueve dinero
+SELECT s.name, MAX(r.total_maount)
+FROM stocks s
+INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_to FROM transactions GROUP BY stk_to) AS t) AS r
+ON t.stock = s.code;
+
+--De la que más sale dinero
+SELECT s.name, MAX(r.total_maount)
+FROM stocks s
+INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_from FROM transactions GROUP BY stk_to) AS t) AS r
+ON t.stock = s.code;
+
+--A la que menos se mueve dinero
+SELECT s.name, MIN(r.total_maount)
+FROM stocks s
+INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_to FROM transactions GROUP BY stk_to) AS t) AS r
+ON t.stock = s.code;
+
+--De la que menos sale dinero
+SELECT s.name, MIN(r.total_maount)
+FROM stocks s
+INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_from FROM transactions GROUP BY stk_to) AS t) AS r
+ON t.stock = s.code;
 
 
 
