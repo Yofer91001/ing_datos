@@ -7,24 +7,21 @@ CREATE DATABASE exval;
 CREATE SCHEMA divisas;
 
 --CREACIÓN DE LOS ROLES Y USUARIOS DE LA BASE DE DATOS
-CREATE ROLE developer;
+
 CREATE USER yofer WITH PASSWORD 'yofer123';
 CREATE USER valentina WITH PASSWORD 'valentina123';
-GRANT ALL ON ALL TABLES IN SCHEMA divisas TO developer;
-REVOKE DELETE ON ALL TABLES IN SCHEMA divisas FROM developer;
-GRANT developer TO yofer;
-GRANT developer TO valentina;
+GRANT ALL ON DATABASE exval TO yofer;
+GRANT ALL ON DATABASE exval TO valentina;
+REVOKE DROP ON DATABASE exval TO YOFER;
+REVOKE DROP ON DATABASE exval TO valentina;
 
 
-CREATE ROLE administrator;
 CREATE USER nelson WITH PASSWORD 'admin123';
-GRANT ALL ON ALL TABLES IN SCHEMA divisas TO administrator;
-GRANT administrator TO nelson;
+GRANT ALL ON DATABASE exval TO nelson;
 
 
-CREATE ROLE data_analytics;
 CREATE USER analitico WITH PASSWORD 'analytics';
-GRANT SELECT ON ALL TABLES IN SCHEMA divisas TO data_analytics;
+GRANT SELECT ON DATABASE exval TO analitico;
 
 --CREACION DE DOMINIO PARA AMOUNT
 CREATE DOMAIN amount AS
