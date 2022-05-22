@@ -266,34 +266,34 @@ INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC) AS rank, stk_to AS st
 ON t.stock = s.code;
 
 --De las que más sale dinero
-SELECT s.name, r.total_maount
+SELECT s.name, r.rank
 FROM divisas.stocks s
-INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_from FROM divisas.transactions GROUP BY stk_to) AS t) AS r
-ON t.stock = s.code;
+INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC) AS rank, stk_to AS stock, total_amount FROM (SELECT SUM(amount) AS total_amount, stk_from FROM divisas.transactions GROUP BY stk_to) AS t) AS r
+ON r.stock = s.code;
 
 --A la que más se mueve dinero
-SELECT s.name, MAX(r.total_maount)
+SELECT s.name, MAX(r.total_amount), r.rank
 FROM divisas.stocks s
-INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_to FROM divisas.transactions GROUP BY stk_to) AS t) AS r
-ON t.stock = s.code;
+INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC) AS rank, stk_to AS stock, total_amount FROM (SELECT SUM(amount) AS total_amount, stk_to FROM divisas.transactions GROUP BY stk_to) AS t) AS r
+ON r.stock = s.code;
 
 --De la que más sale dinero
-SELECT s.name, MAX(r.total_maount)
+SELECT s.name, MAX(r.total_amount), r.rank
 FROM divisas.stocks s
-INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_from FROM divisas.transactions GROUP BY stk_to) AS t) AS r
-ON t.stock = s.code;
+INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC) AS rank, stk_to AS stock, total_amount FROM (SELECT SUM(amount) AS total_amount, stk_from FROM divisas.transactions GROUP BY stk_to) AS t) AS r
+ON r.stock = s.code;
 
 --A la que menos se mueve dinero
-SELECT s.name, MIN(r.total_maount)
+SELECT s.name, MIN(r.total_amount), r.rank
 FROM divisas.stocks s
-INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_to FROM divisas.transactions GROUP BY stk_to) AS t) AS r
-ON t.stock = s.code;
+INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC) AS rank, stk_to AS stock, total_amount FROM (SELECT SUM(amount) AS total_amount, stk_to FROM divisas.transactions GROUP BY stk_to) AS t) AS r
+ON r.stock = s.code;
 
 --De la que menos sale dinero
-SELECT s.name, MIN(r.total_maount)
+SELECT s.name, MIN(r.total_amount), r.rank
 FROM divisas.stocks s
-INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC), stk_to AS stock FROM (SELECT SUM(amount) AS total_amount, stk_from FROM divisas.transactions GROUP BY stk_to) AS t) AS r
-ON t.stock = s.code;
+INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC) AS rank, stk_to AS stock, total_amount FROM (SELECT SUM(amount) AS total_amount, stk_from FROM divisas.transactions GROUP BY stk_to) AS t) AS r
+ON r.stock = s.code;
 
 
 
