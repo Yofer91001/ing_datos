@@ -196,12 +196,12 @@ CREATE OR REPLACE FUNCTION stk_to_eur(stk CHAR(3), amount amount)
 
 --##Calcular euro a moneda
 CREATE OR REPLACE FUNCTION eur_to_stk(stk CHAR(3), amount amount)
-	RETURNS DECIMAL(20,5)
+	RETURNS amount
 	LANGUAGE 'plpgsql'
         AS
 	$$
 	DECLARE 
-		total DECIMAL(20,5)
+		total amount;
 	BEGIN
 		SELECT tota INTO total FROM (SELECT amount/valor AS tota FROM (SELECT value AS total FROM divisas.stocks WHERE code = stk_code) AS val) AS tot;
 		RETURN total;
