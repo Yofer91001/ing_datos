@@ -1,7 +1,3 @@
-
-
---\c exval
-
 --Creación del esquema
 CREATE SCHEMA divisas;
 
@@ -11,8 +7,6 @@ CREATE USER yofer WITH PASSWORD 'yofer123';
 CREATE USER valentina WITH PASSWORD 'valentina123';
 GRANT ALL ON DATABASE exval TO yofer;
 GRANT ALL ON DATABASE exval TO valentina;
-REVOKE DROP ON DATABASE exval TO yofer;
-REVOKE DROP ON DATABASE exval TO valentina;
 
 
 CREATE USER nelson WITH PASSWORD 'admin123';
