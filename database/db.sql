@@ -232,7 +232,7 @@ EXECUTE PROCEDURE actualizarCapitales(nr.id_user, id_type, nr.stk_from, nr.stk_t
 
 --GANANCIAS
 CREATE OR REPLACE VIEW ganancias AS
-(SELECT SUM(amount*interest) AS ganancias
+(SELECT SUM(amount*0.03) AS ganancias
 FROM divisas.transactions);
 
 
