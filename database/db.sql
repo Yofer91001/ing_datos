@@ -214,7 +214,7 @@ CREATE OR REPLACE PROCEDURE actualizarCapitales(id_usuario INT, id_tipo INT, mon
         $$
 	BEGIN
 		IF (id_tipo = 2) AND NOT EXISTS (SELECT * FROM capitals c WHERE c.id_user = id_usuario AND stk_code = moneda_f) THEN
-			EXECUTE PROCEDURE insertCapital( moneda_f, nr.id_user , nr.amount)
+			EXECUTE PROCEDURE insertCapital( moneda_f, id_usuario , cantidad)
 		ELSE	
 		
 			EXECUTE PROCEDURE actualizarCapital(id_usuario, id_tipo, moneda_i, moneda_f , cantidad)
