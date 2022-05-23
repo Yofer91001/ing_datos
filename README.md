@@ -155,15 +155,15 @@ CREATE TABLE divisas.capitals(
 	<li> Ejecutar: </li>
 	<code>
 	\i 'd:/Desktop/ing_datos/database/creation.sql';
-	<br>
+	<hr>
 	\c exval;
-	<br>
+	<hr>
 	\i 'd:/Desktop/ing_datos/database/db.sql';
-	<br>
+	<hr>
 	COPY divisas.users(name, pass, email, user_name) FROM 'd:/Desktop/ing_datos/database/usuarios.csv' DELIMITER ';' HEADER CSV;
-	<br>
+	<hr>
 	COPY divisas.stocks FROM 'd:/Desktop/ing_datos/database/divisas.csv' DELIMITER ';' HEADER CSV;
-	<br>
+	<hr>
 	\i 'd:/Desktop/ing_datos/database/queries.sql';
 	</code>
 </ol>
