@@ -12,7 +12,7 @@ SELECT RANK() OVER(ORDER BY value DESC), name, value FROM divisas.stocks;
 
 
 --Los usuarios con más transacciones
-SELECT RANK() OVER(ORDER BY total_transacciones DESC), txu.* FROM txu;
+SELECT RANK() OVER(ORDER BY total_transacciones), txu.* FROM txu;
 
 
 --Monedas con más transacciones:
