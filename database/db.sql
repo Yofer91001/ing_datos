@@ -44,7 +44,7 @@ CREATE TABLE divisas.types(
 );
 CREATE TABLE divisas.stocks(
         code CHAR(3) PRIMARY KEY,
-        name VARCHAR(15) NOT NULL UNIQUE,
+        name VARCHAR(40) NOT NULL UNIQUE,
         value FLOAT NOT NULL
 );
 CREATE TABLE divisas.priorities(
