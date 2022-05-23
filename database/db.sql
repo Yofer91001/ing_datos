@@ -220,74 +220,16 @@ FOR EACH ROW
 EXECUTE PROCEDURE actualizarCapitales();
 
 
---GANANCIAS
+--VISTAS
+--#Ganancias
 CREATE OR REPLACE VIEW ganancias AS
 (SELECT SUM(amount*0.03) AS ganancias
 FROM divisas.transactions);
 
-
---CONSULTAS GENERALES:
---Ordenar por fechas todas las transacciones
-SELECT * FROM divisas.transactions ORDER BY date;
-
---Mostrar las monedas que más tienen los usuarios en sus capitales
-SELECT SUM(amount) AS total_amount, stk_code FROM divisas.capitals GROUP BY stk_code ORDER BY total_amount DESC;
-
---Seleccionar las divisas más valiosas respecto al euro
-SELECT RANK() OVER(ORDER BY value DESC), name, value FROM divisas.stocks;
-
---TRANSACCIONES REALIZADAS POR UN USUARIO
+--#transacciones por usuario
 CREATE OR REPLACE VIEW txu AS(
 SELECT COUNT(user_name) AS total_transacciones, user_name FROM (SELECT u.user_name FROM divisas.users u INNER JOIN divisas.transactions t ON u.id =  t.id_user) AS ut
 GROUP BY user_name
 );
 
---Los usuarios con más transacciones
-SELECT RANK() OVER(ORDER BY total_transacciones DESC), txu.* FROM txu;
-
-
---Monedas con más transacciones:
---A las que más se mueve dinero
-SELECT s.name, r.total_amount, r.rank
-FROM divisas.stocks s
-INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC) AS rank, stk_to AS stock, total_amount FROM (SELECT SUM(amount) AS total_amount, stk_to FROM divisas.transactions GROUP BY stk_to) AS t) AS r
-ON r.stock = s.code;
-
---De las que más sale dinero
-SELECT s.name, r.rank
-FROM divisas.stocks s
-INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC) AS rank, stk_from AS stock, total_amount FROM (SELECT SUM(amount) AS total_amount, stk_from FROM divisas.transactions GROUP BY stk_from) AS t) AS r
-ON r.stock = s.code;
-
---A la que más se mueve dinero
-SELECT s.name, MAX(r.total_amount), r.rank
-FROM divisas.stocks s
-INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC) AS rank, stk_to AS stock, total_amount FROM (SELECT SUM(amount) AS total_amount, stk_to FROM divisas.transactions GROUP BY stk_to) AS t) AS r
-ON r.stock = s.code
-LIMIT 1;
-
---De la que más sale dinero
-SELECT s.name, MAX(r.total_amount), r.rank
-FROM divisas.stocks s
-INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount DESC) AS rank, stk_from AS stock, total_amount FROM (SELECT SUM(amount) AS total_amount, stk_from FROM divisas.transactions GROUP BY stk_from) AS t) AS r
-ON r.stock = s.code
-LIMIT 1;
-
---A la que menos se mueve dinero
-SELECT s.name, MIN(r.total_amount), r.rank
-FROM divisas.stocks s
-INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount ASC) AS rank, stk_to AS stock, total_amount FROM (SELECT SUM(amount) AS total_amount, stk_to FROM divisas.transactions GROUP BY stk_to) AS t) AS r
-ON r.stock = s.code
-LIMIT 1;
-
---De la que menos sale dinero
-SELECT s.name, MIN(r.total_amount), r.rank
-FROM divisas.stocks s
-INNER JOIN (SELECT RANK() OVER(ORDER BY total_amount ASC) AS rank, stk_to AS stock, total_amount FROM (SELECT SUM(amount) AS total_amount, stk_from FROM divisas.transactions GROUP BY stk_to) AS t) AS r
-ON r.stock = s.code
-LIMIT 1;
-
---Numero de usuarios registrados
-
---Usuarios con más dinero en euros
 
