@@ -142,10 +142,10 @@ CREATE TABLE divisas.capitals(
 ## Instrucciones:
 <ol>
 	<li> Moverse al disco d y luego al escritorio: </li>
-	~~~
+	<code>
 	d:
 	cd Desktop
-	~~~
+	</code>
 	<li> Descargar el repositorio: </li>
 	~~~
 	git clone https://github.com/Yofer91001/ing_datos.git
