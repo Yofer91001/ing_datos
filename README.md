@@ -144,7 +144,7 @@ CREATE TABLE divisas.capitals(
 	<li> Moverse al disco d y luego al escritorio: </li>
 	<code>
 	d:
-	<br>
+	<hr>
 	cd Desktop
 	</code>
 	<li> Descargar el repositorio: </li>
