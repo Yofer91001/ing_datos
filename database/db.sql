@@ -192,18 +192,24 @@ CREATE OR REPLACE FUNCTION actualizarCapitales()
         AS
         $$
 	BEGIN
-		IF (NEW.id_type = 2) AND NOT EXISTS (SELECT * FROM divisas.capitals c WHERE c.id_user = NEW.id_user AND stk_code = NEW.stk_to) THEN
 		
+	
+		IF (NEW.id_type = 2) AND NOT EXISTS (SELECT * FROM divisas.capitals c WHERE c.id_user = NEW.id_user AND stk_code = NEW.stk_to) THEN
+			
 			INSERT INTO divisas.capitals( stk_code, id_user, amount) VALUES( NEW.stk_to, NEW.id_user, NEW.amount);
 			
 		ELSE	
-		
-			IF NEW.id_type = 1 OR NEW.id_type = 3 THEN
-				UPDATE divisas.capitals c SET c.amount = c.amount - NEW.amount*1.03 WHERE stk_code = NEW.stk_from AND c.id_user = NEW.id_user;
+			
+			IF NEW.id_type = 1 THEN
+				UPDATE divisas.capitals SET amount = amount - NEW.amount*1.03 WHERE stk_code = NEW.stk_from AND id_user = NEW.id_user;
+			ELSE IF NEW.id_type = 2 THEN
+				UPDATE divisas.capitals SET amount = amount + NEW.amount WHERE stk_code = NEW.stk_to AND id_user = NEW.id_user;
 			END IF;
-			IF NEW.id_type = 3 OR NEW.id_type = 2 THEN
-				UPDATE divisas.capitals c SET c.amount = c.amount - NEW.amount*1.03 WHERE stk_code = NEW.stk_to AND c.id_user = NEW.id_user;
+			ELSE
+				UPDATE divisas.capitals SET amount = amount - NEW.amount*1.03 WHERE stk_code = NEW.stk_from AND id_user = NEW.id_user;
+				UPDATE divisas.capitals SET amount = amount + stk_to_stk(NEW.stk_from, NEW.stk_to,NEW.amount) WHERE stk_code = NEW.stk_to AND id_user = NEW.id_user;
 			END IF;
+			
 		END IF;
 		RETURN NEW;
 	END;
