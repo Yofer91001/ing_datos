@@ -54,7 +54,7 @@ CREATE TABLE divisas.priorities(
 );
 
 CREATE TABLE divisas.transactions(
-        id INT PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         id_user INT REFERENCES divisas.users(id),
         id_type INT REFERENCES divisas.types(id),
         stk_from CHAR(3) REFERENCES divisas.stocks(code),
@@ -71,8 +71,6 @@ CREATE TABLE divisas.capitals(
 );
 
 
---CREACION DE INDICE TABLA TRANSACCIONES
-CREATE INDEX id_transaccion ON divisas.transactions(id);
 
 
 --INSERCIONES GENERALES
@@ -233,10 +231,10 @@ FROM divisas.transactions);
 SELECT * FROM divisas.transactions ORDER BY date;
 
 --Mostrar las monedas que más tienen los usuarios en sus capitales
-SELECT SUM(amount) AS total_amount, stk_code FROM divisas.capitals GROUP BY stk_code ORDER BY total_amount;
+SELECT SUM(amount) AS total_amount, stk_code FROM divisas.capitals GROUP BY stk_code ORDER BY total_amount DESC;
 
 --Seleccionar las divisas más valiosas respecto al euro
-SELECT RANK() OVER(ORDER BY value DESC) FROM divisas.stocks;
+SELECT RANK() OVER(ORDER BY value DESC), name, value FROM divisas.stocks;
 
 --TRANSACCIONES REALIZADAS POR UN USUARIO
 CREATE OR REPLACE VIEW txu AS(
