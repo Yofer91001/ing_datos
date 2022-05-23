@@ -200,10 +200,11 @@ CREATE OR REPLACE FUNCTION actualizarCapitales()
 			
 			IF NEW.id_type = 1 THEN
 				UPDATE divisas.capitals SET amount = amount - NEW.amount*1.03 WHERE stk_code = NEW.stk_from AND id_user = NEW.id_user;
-			ELSE IF NEW.id_type = 2 THEN
+			END IF;
+			IF NEW.id_type = 2 THEN
 				UPDATE divisas.capitals SET amount = amount + NEW.amount WHERE stk_code = NEW.stk_to AND id_user = NEW.id_user;
 			END IF;
-			ELSE
+			IF NEW.id_type = 3 THEN
 				UPDATE divisas.capitals SET amount = amount - NEW.amount*1.03 WHERE stk_code = NEW.stk_from AND id_user = NEW.id_user;
 				UPDATE divisas.capitals SET amount = amount + stk_to_stk(NEW.stk_from, NEW.stk_to,NEW.amount) WHERE stk_code = NEW.stk_to AND id_user = NEW.id_user;
 			END IF;
