@@ -5,8 +5,8 @@ CREATE SCHEMA divisas;
 
 CREATE USER yofer WITH PASSWORD 'yofer123';
 CREATE USER valentina WITH PASSWORD 'valentina123';
-GRANT ALL ON DATABASE exval TO yofer;
-GRANT ALL ON DATABASE exval TO valentina;
+GRANT ALL ON ALL TABLES IN SCHEMA divisas TO yofer;
+GRANT ALL ON ALL TABLES IN SCHEMA divisas TO valentina;
 
 
 CREATE USER nelson WITH PASSWORD 'admin123';
