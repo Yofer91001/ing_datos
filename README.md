@@ -46,13 +46,12 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 <img src = "./diagrama_relacional.png">
 
 
-## Explicación de las relaciones
+## Explicación de las TABLAS
 <ul>
 	<li> <code>users</code> será la que almacena la información de los usuarios</li>
 	<li> <code>types</code> será la que almacena los tipos de transacciones</li>
 	<li> <code>stocks</code> será la que almacena la información de las divisas</li>
 	<li> <code>priorities</code> será la que almacena las peincipales divisas en las que se interesan los usuarios</li>
-	<li> <code>interests</code> será la que almacena los intereses de cada transacción</li>
 	<li> <code>transactions</code> será la que almacena la información de cada transacción</li>
 	<li> <code>capitals</code> será la que almacena la información del dinero que tiene cada ususario en las diversas divisas</li>
 	
