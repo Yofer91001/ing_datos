@@ -194,7 +194,7 @@ CREATE OR REPLACE FUNCTION actualizarCapitales()
 	BEGIN
 		IF (NEW.id_type = 2) AND NOT EXISTS (SELECT * FROM divisas.capitals c WHERE c.id_user = NEW.id_user AND stk_code = NEW.stk_to) THEN
 		
-			INSERT INTO divisas.capitals( stk_code, id_user, amount) VALUES( moneda, id_usuario, cantidad);
+			INSERT INTO divisas.capitals( stk_code, id_user, amount) VALUES( NEW.stk_to, NEW.id_user, NEW.amount);
 			
 		ELSE	
 		
