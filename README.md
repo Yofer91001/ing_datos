@@ -144,21 +144,27 @@ CREATE TABLE divisas.capitals(
 	<li> Moverse al disco d y luego al escritorio: </li>
 	<code>
 	d:
+	<br>
 	cd Desktop
 	</code>
 	<li> Descargar el repositorio: </li>
-	~~~
+	<code>
 	git clone https://github.com/Yofer91001/ing_datos.git
-	~~~
+	</code>
 	<li> Abrir SQL Shell </li>
 	<li> Ejecutar: </li>
-	~~~
+	<code>
 	\i 'd:/Desktop/ing_datos/database/creation.sql';
+	<br>
 	\c exval;
+	<br>
 	\i 'd:/Desktop/ing_datos/database/db.sql';
+	<br>
 	COPY divisas.users(name, pass, email, user_name) FROM 'd:/Desktop/ing_datos/database/usuarios.csv' DELIMITER ';' HEADER CSV;
+	<br>
 	COPY divisas.stocks FROM 'd:/Desktop/ing_datos/database/divisas.csv' DELIMITER ';' HEADER CSV;
+	<br>
 	\i 'd:/Desktop/ing_datos/database/queries.sql';
-	~~~
+	</code>
 </ol>
 
