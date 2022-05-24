@@ -172,6 +172,8 @@ CREATE TABLE divisas.capitals(
 	<hr>
 	COPY divisas.stocks FROM 'c:/ing_datos/database/divisas.csv' DELIMITER ';' HEADER CSV;
 	<hr>
+	COPY divisas.transactions(id,id_user, id_type, stk_from, stk_to, amount,date) FROM 'c:/ing_datos/database/divisas.csv' DELIMITER ';' HEADER CSV;
+	<hr>
 	\i 'c:/ing_datos/database/queries.sql';
 	</code>
 </ol>
