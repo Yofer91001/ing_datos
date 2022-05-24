@@ -215,7 +215,7 @@ CREATE OR REPLACE FUNCTION actualizarCapitales()
         $$;
 
 --#TRIGGERS
-CREATE OR REPLACE TRIGGER actualizar_capitales AFTER INSERT 
+CREATE TRIGGER actualizar_capitales AFTER INSERT 
 ON divisas.transactions
 FOR EACH ROW
 EXECUTE PROCEDURE actualizarCapitales();
