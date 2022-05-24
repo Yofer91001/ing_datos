@@ -101,7 +101,6 @@ DROP TABLE IF EXISTS divisas.users;
 DROP TABLE IF EXISTS divisas.types;
 DROP TABLE IF EXISTS divisas.stocks;
 DROP TABLE IF EXISTS divisas.priorities;
-DROP TABLE IF EXISTS divisas.interests;
 DROP TABLE IF EXISTS divisas.transactions;
 DROP TABLE IF EXISTS divisas.capitals;
 
