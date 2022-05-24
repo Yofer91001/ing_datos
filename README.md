@@ -6,23 +6,34 @@
 <li>Yofer Quintanilla </li>
 </ul>
 
-## Probelma
+## Probelma:
 
-Dentro del mercado existen pocas páginas que brinden información y a la vez permitan realizar transacciones con diferentes divisas, sin tener un alto conocimiento en el área. Y las pocas aplicaciones o páginas que lo permiten recaudan una cuota muy alta por su servicio.
+Dentro del mercado existen pocas páginas que brinden información y a la vez permitan realizar transacciones con diferentes divisas, sin tener un alto conocimiento en el área, y las pocas aplicaciones o páginas que lo permiten recaudan una cuota muy alta por su servicio.
 
-## Descripción
+## Descripción:
 
-Este proyecto, es una aplicación web que recopila datos de una API de divisas, para así permitirle a los usuarios europeos realizar transacciones entre estas de forma eficiente y segura, cobrando una pequeña comisión por transacción para mantener el servicio en línea.
+Este proyecto, es una aplicación web que recopila datos de una API de divisas, para así permitirle a los usuarios realizar transacciones entre estas de forma eficiente y segura, cobrando una pequeña comisión por transacción para mantener el servicio en línea.
+
+## Motivación:
+
+Siempre nos han interesado las finanzas, y vimos este proyecto como la oportunidad de realizar una herramienta que aporte a este sector, desde ver una falencia que habia, ya que nos dimos cuenta que no hay una aplicación, como PayPal, que tenga la confianza de la gente para dejar todo su dinero en ella.
+
+## Recolección de datos:
+
+La descarga de los datos de las divisas fue un trabajo arduo, ya que tuvimos que descargar un archivo json y pasarlo a csv, sin embargo, el archivo generado no tenia el formato necesitado, asi que fueron procesados estos datos en excel, y posteriormente cargados a nuestra base de datos.
+
+Además, al no contar con un despligue online, no pudimos recolecar muchos datos de transacciones, por lo cual se tuvieron que realizar manualmente.
+
 
 ## Utilidades:
  <ol>
-	<li>Ver las tasas de cambio en tiempo real</li>
+	<li>Ver las tasas de cambio respecto al dolar de las divisas ofrecidas en nuestro portafolio</li>
 	<li>Tener el dinero en diversas divisas en un solo lugar</li>
 	<li>Realizar transacciones entre divisas</li>
 	<li>Consignar y retirar dinero de manera fácil</li> 
 </ol>
 
-## Herramientas para el desarrollo
+## Herramientas para el desarrollo:
 
 <ul>
 	<li>Postgresql (Docker)</li>
@@ -44,7 +55,6 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 ### Diseño Lógico
 
 <img src = "./diagrama_relacional.png">
-
 
 ## Explicación de las TABLAS
 <ul>
@@ -141,11 +151,9 @@ CREATE TABLE divisas.capitals(
 
 ## Instrucciones:
 <ol>
-	<li> Moverse al disco d y luego al escritorio: </li>
+	<li> Moverse al disco c </li>
 	<code>
-	d:
-	<hr>
-	cd Desktop
+	c:
 	</code>
 	<li> Descargar el repositorio: </li>
 	<code>
@@ -154,17 +162,17 @@ CREATE TABLE divisas.capitals(
 	<li> Abrir SQL Shell </li>
 	<li> Ejecutar: </li>
 	<code>
-	\i 'd:/Desktop/ing_datos/database/creation.sql';
+	\i 'c:/ing_datos/database/creation.sql';
 	<hr>
 	\c exval;
 	<hr>
-	\i 'd:/Desktop/ing_datos/database/db.sql';
+	\i 'c:/database/db.sql';
 	<hr>
-	COPY divisas.users(name, pass, email, user_name) FROM 'd:/Desktop/ing_datos/database/usuarios.csv' DELIMITER ';' HEADER CSV;
+	COPY divisas.users(name, pass, email, user_name) FROM 'c:/ing_datos/database/usuarios.csv' DELIMITER ';' HEADER CSV;
 	<hr>
-	COPY divisas.stocks FROM 'd:/Desktop/ing_datos/database/divisas.csv' DELIMITER ';' HEADER CSV;
+	COPY divisas.stocks FROM 'c:/ing_datos/database/divisas.csv' DELIMITER ';' HEADER CSV;
 	<hr>
-	\i 'd:/Desktop/ing_datos/database/queries.sql';
+	\i 'c:/ing_datos/database/queries.sql';
 	</code>
 </ol>
 
