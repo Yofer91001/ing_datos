@@ -166,7 +166,7 @@ CREATE TABLE divisas.capitals(
 	<hr>
 	\c exval;
 	<hr>
-	\i 'c:/database/db.sql';
+	\i 'c:/ing_datos/database/db.sql';
 	<hr>
 	COPY divisas.users(name, pass, email, user_name) FROM 'c:/ing_datos/database/usuarios.csv' DELIMITER ';' HEADER CSV;
 	<hr>
