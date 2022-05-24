@@ -25,7 +25,6 @@ DROP TABLE IF EXISTS divisas.users;
 DROP TABLE IF EXISTS divisas.types;
 DROP TABLE IF EXISTS divisas.stocks;
 DROP TABLE IF EXISTS divisas.priorities;
-DROP TABLE IF EXISTS divisas.interests;
 DROP TABLE IF EXISTS divisas.transactions;
 DROP TABLE IF EXISTS divisas.capitals;
 
@@ -77,10 +76,6 @@ CREATE TABLE divisas.capitals(
 INSERT INTO divisas.types(name) VALUES('Retiro');
 INSERT INTO divisas.types(name) VALUES('Consignacion');
 INSERT INTO divisas.types(name) VALUES('Cambio');
-
---CARGA MASIVA DE DATOS
---COPY divisas.users(names, pass, email, user_name) FROM './usuarios.csv' DELIMITER ',' CSV HEADER;
---COPY divisas.stocks FROM './divisas.csv' DELIMITER ',' CSV HEADER; 
 
 --#PROCEDURES
 --##INSERCIONES
