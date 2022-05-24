@@ -6,7 +6,7 @@ SELECT * FROM divisas.transactions ORDER BY date;
 SELECT SUM(amount) AS total_amount, stk_code FROM divisas.capitals GROUP BY stk_code ORDER BY total_amount DESC;
 
 --Seleccionar las divisas más valiosas respecto al euro
-SELECT RANK() OVER(ORDER BY value DESC), name, value FROM divisas.stocks;
+SELECT RANK() OVER(ORDER BY value), name, value FROM divisas.stocks;
 
 --TRANSACCIONES REALIZADAS POR UN USUARIO
 
