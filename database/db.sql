@@ -111,7 +111,7 @@ CREATE OR REPLACE PROCEDURE insertTransaction( id_usuario INT, id_tipo INT, mone
   	IF moneda_f IS NOT NULL THEN
 		IF moneda_i IS NOT NULL THEN
 			INSERT INTO divisas.transactions( id_user, id_type, stk_from, stk_to, amount, date) VALUES( id_usuario, id_tipo, moneda_i, moneda_f, cantidad, NOW());
-			IF EXISTS (SELECT amount FROM capitals WHERE id_user = id_usuario AND stk_code = moneda_i AND amount > cantidad*1.03) THEN
+			IF EXISTS (SELECT amount FROM divisas.capitals WHERE id_user = id_usuario AND stk_code = moneda_i AND amount > cantidad*1.03) THEN
 				COMMIT;
 			ELSE
 				ROLLBACK;
