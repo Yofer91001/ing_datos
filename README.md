@@ -50,9 +50,13 @@ Además, al no contar con un despligue online, no pudimos recolecar muchos datos
 
 ### Diseño Conceptual
 
+Modelo entidad relacion:
+
 <img src = "./image(2).png">
 
 ### Diseño Lógico
+
+Diagrama relacional:
 
 <img src = "./diagrama_relacional.png">
 
