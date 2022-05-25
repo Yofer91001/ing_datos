@@ -1,3 +1,5 @@
+##El link para visualizar la grafica aparece en consola al correr el codigo.
+
 import psycopg2
 import pandas as pd
 import plotly.express as px
