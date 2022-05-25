@@ -52,7 +52,7 @@ Además, al no contar con un despligue online, no pudimos recolecar muchos datos
 
 Modelo entidad relacion:
 
-<img src = "./image(2).png">
+<img src = "./diseño_conceptual.png">
 
 ### Diseño Lógico
 
