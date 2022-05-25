@@ -46,7 +46,7 @@ Además, al no contar con un despligue online, no pudimos recolecar muchos datos
 
 ### Bosquejo
 
-<img src = "./esquema.jpg">
+<img src = "./bosquejo_diseño.jpg">
 
 ### Diseño Conceptual
 
