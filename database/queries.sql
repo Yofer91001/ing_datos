@@ -63,9 +63,9 @@ LIMIT 1;
 --Numero de usuarios registrados
 SELECT COUNT(*) FROM divisas.users;
 
---Usuarios con más dinero en
-SELECT u.user_name, final.rank FROM divisas.users u
-INNER JOIN (SELECT RANK() OVER(ORDER BY total DESC) AS rank, id_user FROM 
+--Usuarios con más dinero en EUROS
+SELECT u.user_name, final.rank, final.total FROM divisas.users u
+INNER JOIN (SELECT RANK() OVER(ORDER BY total DESC) AS rank, id_user, total FROM 
 	(SELECT SUM(eur) AS total, id_user FROM 
 	 (SELECT id_user, stk_to_eur(stk_code, c.amount) AS eur FROM divisas.capitals c) AS stocks GROUP BY id_user) AS TEUR) AS final
-ON final.id_user = u.id_user;
+ON final.id_user = u.id;
