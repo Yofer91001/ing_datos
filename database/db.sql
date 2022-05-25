@@ -18,7 +18,7 @@ GRANT SELECT ON DATABASE exval TO analitico;
 
 --CREACION DE DOMINIO PARA AMOUNT
 CREATE DOMAIN amount AS
-	FLOAT NOT NULL CHECK (value >= 0);
+	FLOAT CHECK (value >= 0);
 
  
 DROP TABLE IF EXISTS divisas.users;
