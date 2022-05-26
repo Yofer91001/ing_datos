@@ -1,5 +1,10 @@
 # Proyecto EXVAL
 
+<a href = "https://www.canva.com/design/DAFByxukDKc/nWrsEP6rUt4qtdJE1Op6IA/edit?utm_content=DAFByxukDKc&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" >Link presentación</a>
+
+<a href = "https://meet.google.com/itk-rnvi-bzi" >Link reunión</a>
+
+
 ## Integrantes
 <ul>
 <li>Valentina Hernández </li>
