@@ -6,7 +6,7 @@
 <li>Yofer Quintanilla </li>
 </ul>
 
-## Probelma:
+## Problema:
 
 Dentro del mercado existen pocas páginas que brinden información y a la vez permitan realizar transacciones con diferentes divisas, sin tener un alto conocimiento en el área, y las pocas aplicaciones o páginas que lo permiten recaudan una cuota muy alta por su servicio.
 
@@ -16,18 +16,18 @@ Este proyecto, es una aplicación web que recopila datos de una API de divisas, 
 
 ## Motivación:
 
-Siempre nos han interesado las finanzas, y vimos este proyecto como la oportunidad de realizar una herramienta que aporte a este sector, desde ver una falencia que habia, ya que nos dimos cuenta que no hay una aplicación, como PayPal, que tenga la confianza de la gente para dejar todo su dinero en ella.
+Siempre nos han interesado las finanzas, y vimos este proyecto como la oportunidad de realizar una herramienta que aporte a este sector, desde ver una falencia que había, ya que nos dimos cuenta que no hay una aplicación, como PayPal, que tenga la confianza de la gente para dejar todo su dinero en ella.
 
 ## Recolección de datos:
 
-La descarga de los datos de las divisas fue un trabajo arduo, ya que tuvimos que descargar un archivo json y pasarlo a csv, sin embargo, el archivo generado no tenia el formato necesitado, asi que fueron procesados estos datos en excel, y posteriormente cargados a nuestra base de datos.
+La descarga de los datos de las divisas fue un trabajo arduo, ya que tuvimos que descargar un archivo json y pasarlo a csv, sin embargo, el archivo generado no tenía el formato necesitado, así que fueron procesados estos datos en excel, y posteriormente cargados a nuestra base de datos.
 
-Además, al no contar con un despligue online, no pudimos recolecar muchos datos de transacciones, por lo cual se tuvieron que realizar manualmente.
+Además, al no contar con un despliegue online, no pudimos recolectar muchos datos de transacciones, por lo cual se tuvieron que realizar manualmente.
 
 
 ## Utilidades:
  <ol>
-	<li>Ver las tasas de cambio respecto al dolar de las divisas ofrecidas en nuestro portafolio</li>
+	<li>Ver las tasas de cambio respecto al dólar de las divisas ofrecidas en nuestro portafolio</li>
 	<li>Tener el dinero en diversas divisas en un solo lugar</li>
 	<li>Realizar transacciones entre divisas</li>
 	<li>Consignar y retirar dinero de manera fácil</li> 
