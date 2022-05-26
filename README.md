@@ -44,6 +44,7 @@ Además, al no contar con un despliegue online, no pudimos recolectar muchos dat
 	<li>Postgresql</li>
 	<li>API: https://www.frankfurter.app/</li>
 	<li>LocalHost</li>
+	<li>Python</li>
 </ul>
 
 
