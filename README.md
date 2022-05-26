@@ -27,7 +27,7 @@ Además, al no contar con un despliegue online, no pudimos recolectar muchos dat
 
 ## Utilidades:
  <ol>
-	<li>Ver las tasas de cambio respecto al dólar de las divisas ofrecidas en nuestro portafolio</li>
+	<li>Ver las tasas de cambio respecto al euro de las divisas ofrecidas en nuestro portafolio</li>
 	<li>Tener el dinero en diversas divisas en un solo lugar</li>
 	<li>Realizar transacciones entre divisas</li>
 	<li>Consignar y retirar dinero de manera fácil</li> 
@@ -36,7 +36,7 @@ Además, al no contar con un despliegue online, no pudimos recolectar muchos dat
 ## Herramientas para el desarrollo:
 
 <ul>
-	<li>Postgresql (Docker)</li>
+	<li>Postgresql</li>
 	<li>API: https://www.frankfurter.app/</li>
 	<li>LocalHost</li>
 </ul>
