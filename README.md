@@ -58,7 +58,7 @@ Modelo entidad relacion:
 
 Diagrama relacional:
 
-<img src = "./diagrama_relacional.png">
+<img src = "./diseño_logico.png">
 
 ## Explicación de las TABLAS
 <ul>
