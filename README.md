@@ -189,10 +189,10 @@ CREATE TABLE divisas.capitals(
 ## Visualizaciones:
 
 Grafio de barras: Usuarios con mas transacciones.
-<img src = "./bosquejo_diseño.PNG">
+<img src = "./transacciones_usuario.PNG">
 
 Grafio de barras: Usuarios con mas dinero.
-<img src = "./bosquejo_diseño.PNG">
+<img src = "./usuarios_mas_dinero.PNG">
 
 Grafio de barras: Divisas con mas movimiento.
-<img src = "./bosquejo_diseño.PNG">
+<img src = "./movimiento_divisas.PNG">
